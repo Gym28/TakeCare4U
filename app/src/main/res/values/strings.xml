@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Take Care 4 u</string>
+    <string name="Inicio_sesion">Inicia Sesion</string>
+    <string name="Registrarse">Registrate</string>
+    <string name="Registro">Registrarme</string>
+    <string name="Completa">Completa la información</string>
+    <string name="Confirmar">Confirmar</string>
+    <string name="publicacion">PUBLICAR SERVICIO</string>
+    <string name="cargar">CARGAR IMAGEN</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

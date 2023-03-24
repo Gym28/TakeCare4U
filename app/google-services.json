@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "921936297629",
+    "project_id": "take-care-4-u",
+    "storage_bucket": "take-care-4-u.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921936297629:android:d34a24d9c4da3ad4aa1e74",
+        "android_client_info": {
+          "package_name": "com.gina.takecare4u"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921936297629-9iueqntgr4dl7nrvoi18teij9n819n80.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtcHuFCqPFKa70brcNg6WWsLXp928aVO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921936297629-9iueqntgr4dl7nrvoi18teij9n819n80.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

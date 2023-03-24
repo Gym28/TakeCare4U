@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".activities.SecondActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:orientation="vertical"
+            android:background="@color/other_purple">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@string/publicacion"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="vertical"
+                android:background="@color/other_purple"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cargar"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="11dp">
+
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="90dp"
+                    app:cardBackgroundColor="@color/other_purple"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    >
+
+
+                    <ImageView
+                        android:id="@+id/imageViewCargar1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/camara_nino"
+                        />
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="90dp"
+                    app:cardBackgroundColor="@color/other_purple"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/imageViewCargar2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/camara_nino"
+                        />
+                </androidx.cardview.widget.CardView>
+
+           </LinearLayout>
+
+         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="45dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/list"
+                android:layout_marginRight="5dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textImputService"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre del Servicio"
+                    android:inputType="text"
+                    android:background="@drawable/round_button"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/camara_2"
+                android:layout_marginRight="5dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textImputDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Descripción"
+                    android:inputType="textMultiLine"
+                    android:background="@drawable/round_button"
+                    android:maxLines="20"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/dollar"
+                android:layout_marginRight="5dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textprice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Precio"
+                    android:inputType="numberSigned"
+                    android:background="@drawable/round_button"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TIPO DE SERVICIO"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:textSize="17sp"
+            android:textColor="@color/dark_purple"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/purple_mio"
+
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:cardBackgroundColor="@color/rose_mio"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="5dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="3dp"
+                    >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ninos"/>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="NIÑ@S"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_purple"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:cardBackgroundColor="@color/rose_mio"
+                    app:cardCornerRadius="5dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="3dp"
+                    app:cardElevation="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_anciano"/>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ANCIAN@S"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_purple"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:cardBackgroundColor="@color/rose_mio"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="5dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="3dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_animales"/>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="MASCOTAS"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_purple"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnPublicacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PUBLICAR"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/other_purple"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+
+        />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

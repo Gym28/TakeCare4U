@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <io.github.florent37.shapeofview.shapes.ArcView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:elevation="4dp"
+            app:shape_arc_height="20dp"
+            app:shape_arc_position="bottom"
+            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/other_purple"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/Completa"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="33sp"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                />
+
+
+
+        </io.github.florent37.shapeofview.shapes.ArcView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="120dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_person_purple"
+                android:layout_marginRight="5dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textImputName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre y Apellido"
+                    android:inputType="text"
+                    android:background="@drawable/round_button"
+                    />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_home_purple"
+                android:layout_marginRight="5dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textImputZipCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Codigo Postal"
+                    android:inputType="text"
+                    android:background="@drawable/round_button"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Confirmar"
+        android:textStyle="bold"
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/other_purple"
+        android:background="@drawable/round_button"
+        />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/profile"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="140dp"
+        app:civ_border_color="@color/purple_mio"
+        app:civ_circle_background_color="@color/rose_mio"
+        app:civ_border_width="4dp"
+
+
+        />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout >

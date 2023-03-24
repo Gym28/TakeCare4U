@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.fragments.HomeFragment"
+    android:layout_marginBottom="50dp">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_purple"
+        android:layout_gravity="bottom|right"
+        android:background="@color/other_purple"
+        android:layout_margin="15dp"
+        />
+
+
+
+
+</FrameLayout>
