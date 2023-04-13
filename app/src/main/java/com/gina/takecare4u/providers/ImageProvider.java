@@ -12,7 +12,7 @@ import java.io.File;
 import java.util.Date;
 
 public class ImageProvider {
-
+//logica para almacenar en storage
     StorageReference mStorage;
     public ImageProvider(){
       //firebaseStorage
@@ -20,12 +20,24 @@ public class ImageProvider {
 
     }
 
+    /**
+     * método para almacenar imagenes
+     * @param context
+     * @param file
+     * @return
+     */
     public UploadTask save (Context context, File file){
         byte[] imageByte= CompresorBitmatUtil.getImage(context, file.getPath(), 500, 500);
-        StorageReference storage= mStorage.child(new Date() + ".jpg");
+        StorageReference storage= FirebaseStorage.getInstance().getReference().child(new Date() + ".jpg");
+        mStorage = storage;
         UploadTask task = storage.putBytes(imageByte);
         return task;
 
+    }
+
+
+    public StorageReference getStorage(){
+        return mStorage;
     }
 
 }

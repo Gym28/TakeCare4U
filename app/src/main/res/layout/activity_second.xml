@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:orientation="vertical"
-            android:background="@color/other_purple">
+            android:background="@color/rose_mio">
 
             <TextView
                 android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:orientation="vertical"
-                android:background="@color/other_purple"
+                android:background="@color/rose_mio"
                 android:layout_marginTop="0dp">
 
                 <TextView
@@ -58,7 +58,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="90dp"
-                    app:cardBackgroundColor="@color/other_purple"
+                    app:cardBackgroundColor="@color/rose_mio"
                     android:layout_weight="1"
                     android:layout_marginRight="10dp"
                     >
@@ -77,7 +77,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="90dp"
-                    app:cardBackgroundColor="@color/other_purple"
+                    app:cardBackgroundColor="@color/rose_mio"
                     android:layout_weight="1"
                     android:layout_marginLeft="10dp"
                     >
@@ -104,6 +104,7 @@
             android:gravity="center">
 
             <ImageView
+                android:id="@+id/imageViewNombreservicio"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/list"
@@ -114,7 +115,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textImputService"
+                    android:id="@+id/textInputNombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nombre del Servicio"
@@ -134,9 +135,10 @@
             android:gravity="center">
 
             <ImageView
+                android:id="@+id/imageViewDescripcion"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/camara_2"
+                android:src="@drawable/lapiz"
                 android:layout_marginRight="5dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -144,7 +146,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textImputDescription"
+                    android:id="@+id/textInputDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Descripción"
@@ -166,6 +168,7 @@
             android:gravity="center">
 
             <ImageView
+                android:id="@+id/imageViewPrecio"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/dollar"
@@ -176,17 +179,18 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textprice"
+                    android:id="@+id/textInputPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Precio"
-                    android:inputType="numberSigned"
+                    android:hint="Precio por hora"
+                    android:inputType="numberDecimal"
                     android:background="@drawable/round_button"
                     />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewTipoServicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TIPO DE SERVICIO"
@@ -230,10 +234,11 @@
                     android:layout_marginLeft="3dp"
                     >
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ninos"/>
+                    <ImageView
+                        android:id="@+id/imageViewNiños"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/boys" />
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -264,9 +269,10 @@
                     app:cardElevation="10dp">
 
                 <ImageView
+                    android:id="@+id/imageViewAncianos"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_anciano"/>
+                    android:src="@drawable/abuelo"/>
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -279,8 +285,6 @@
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
                     />
-
-
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
@@ -298,9 +302,10 @@
                     android:layout_marginLeft="3dp">
 
                 <ImageView
+                    android:id="@+id/imageViewMascotas"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_animales"/>
+                    android:src="@drawable/pets"/>
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -331,6 +336,15 @@
         android:textColor="@color/white"
 
         />
+
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_arrow_left"
+        android:layout_margin="15dp"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

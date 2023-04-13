@@ -23,7 +23,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/other_purple"/>
+            android:background="@color/rose_mio"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="15dp"
             android:gravity="center">
 
             <ImageView
@@ -141,6 +141,39 @@
                     android:background="@drawable/round_button"
                     />
             </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_phone"
+                android:layout_marginRight="5dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Teléfono"
+                    android:inputType="numberSigned"
+                    android:background="@drawable/round_button"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
         </LinearLayout>
 
 
@@ -188,7 +221,8 @@
                 android:layout_width="40dp"
                 android:layout_height="25dp"
                 android:src="@drawable/ic_lock_purple"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginRight="5dp"
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -215,7 +249,7 @@
         android:layout_gravity="bottom"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="30dp"
-        android:backgroundTint="@color/purple_mio"
+        android:backgroundTint="@color/rose_mio"
         android:background="@drawable/round_button"
 
         />

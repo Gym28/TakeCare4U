@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activities.fragments.FilterFragment">
+    tools:context=".activities.UserProfileActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -74,7 +74,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:textSize="15sp"
-                       />
+                        />
 
                 </LinearLayout>
 
@@ -146,34 +146,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/linearLayoutEditPerfil"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="right"
-                    android:gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    >
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/lapiz"
-                        android:gravity="center"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="EDITAR PERFIL"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="5dp"/>
-
-
-
-                </LinearLayout>
 
             </FrameLayout>
 
@@ -190,7 +162,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sin Publicacioens"
+            android:text="Sin Publicaciones"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="20dp"
@@ -199,5 +171,12 @@
             android:textStyle="italic"/>
 
     </androidx.core.widget.NestedScrollView>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImagePubliBack"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_white_back"
+        android:layout_margin="10dp"
+        android:layout_marginLeft="1dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

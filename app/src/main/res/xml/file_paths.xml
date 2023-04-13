@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path
+        name="takecare4u"
+        path="Android/data/com.gina.takecare4u/files/Pictures"/>
+
+</paths>

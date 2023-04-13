@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -41,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText mTextInputZipCode;
     TextInputEditText mTextInputPassword;
     TextInputEditText mTextInputConfirm;
+    TextInputEditText mTextInputPhone;
     Button mBtnRegister;
     //objeto de firebase
     AuthProvider mAutProvider;
@@ -61,6 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
         mTextInputPassword=findViewById(R.id.textImputPassword);
         mTextInputConfirm=findViewById(R.id.textImputConfirm);
         mBtnRegister=findViewById(R.id.btnRegister);
+        mTextInputPhone = findViewById(R.id.textInputPhone);
+
         //instancia para controlar el registro de usuarios
             mAutProvider= new AuthProvider();
         //instancia para trabajar con la base de datos
@@ -92,15 +96,16 @@ public class RegisterActivity extends AppCompatActivity {
         String name = mTextInputName.getText().toString();
         String zipCode= mTextInputZipCode.getText().toString();
         String email = mTextInputEmail.getText().toString();
-        String  password = mTextInputPassword.getText().toString();
-        String  confirm =mTextInputConfirm.getText().toString();
+        String password = mTextInputPassword.getText().toString();
+        String confirm =mTextInputConfirm.getText().toString();
+        String phone = mTextInputPhone.getText().toString();
 
-        if(!name.isEmpty() && !email.isEmpty() && !zipCode.isEmpty() && !password.isEmpty() && !confirm.isEmpty()){
+        if(!name.isEmpty() && !email.isEmpty() && !zipCode.isEmpty() && !password.isEmpty() && !confirm.isEmpty() && !phone.isEmpty()){
             if(isEmailValid(email)) {
                 if (password.equals(confirm)) {
                     if (password.length() >= 6) {
                         if(zipCode.length()==5){
-                            createUser(name,zipCode,email,password);
+                            createUser(name,zipCode,email,password, phone);
                             Log.d(TAG, "createUserWithEmail:success");
                         }else{
                             Toast.makeText(this, "Verifica el Código Postal ", Toast.LENGTH_SHORT).show();
@@ -138,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
      *
      */
 
-    private void createUser(String name,String zipCode, String email, String password ){
+    private void createUser(String name,String zipCode, String email, String password, String phone){
         mDialog.show();
         mAutProvider.Register(email, password)
                 .addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
@@ -152,6 +157,8 @@ public class RegisterActivity extends AppCompatActivity {
                     user.setNombre(name);
                     user.setEmail(email);
                     user.setZipCode(zipCode);
+                    user.setPhone(phone);
+                    user.setTimestamp(new Date().getTime());
                     mUserProvider.create(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NotNull Task<Void> task) {

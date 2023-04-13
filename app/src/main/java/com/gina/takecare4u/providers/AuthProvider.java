@@ -47,5 +47,24 @@ public class AuthProvider {
         }
     }
 
+    //metodo para cerrar sesión
+
+    public void cerrarSesion(){
+        if(mAuth !=null){
+            mAuth.signOut();
+        }
+
+    }
+
+    public Task<Void>cambiarContraseña(String email){
+        if (mAuth !=null && mAuth.getCurrentUser()!=null) {
+            mAuth.setLanguageCode("es");
+           return mAuth.sendPasswordResetEmail(email);
+        } else {
+            return null;
+        }
+    }
+
+
 
 }

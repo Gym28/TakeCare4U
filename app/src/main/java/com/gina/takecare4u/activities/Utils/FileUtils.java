@@ -1,4 +1,5 @@
 package com.gina.takecare4u.activities.Utils;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -58,6 +59,7 @@ public class FileUtils {
         return new String[]{name, extension};
     }
 
+    @SuppressLint("Range")
     private static String getFileName(Context context, Uri uri) {
         String result = null;
         if (uri.getScheme().equals("content")) {

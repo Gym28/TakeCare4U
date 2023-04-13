@@ -6,6 +6,11 @@ public class Users {
     private String zipCode;
     private String nombre;
     private String password;
+    private String imageProfile;
+    private String imageCover;
+    private String phone;
+    private long timestamp;
+
 
     // constructor clase user con getter y setter
     // constructor vacio
@@ -13,11 +18,15 @@ public class Users {
 
     }
 
-    public Users(String id, String nombre, String zipCode, String email) {
+    public Users(String id, String nombre, String zipCode, String email, String phone, long timestamp, String imageProfile, String imageCover) {
         this.id = id;
         this.email = email;
         this.zipCode = zipCode;
         this.nombre = nombre;
+        this.phone = phone;
+        this.timestamp=timestamp;
+        this.imageProfile=imageProfile;
+        this.imageCover=imageCover;
 
     }
 
@@ -51,5 +60,37 @@ public class Users {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getImageProfile() {
+        return imageProfile;
+    }
+
+    public void setImageProfile(String imageprofile) {
+        this.imageProfile = imageprofile;
+    }
+
+    public String getImageCover() {
+        return imageCover;
+    }
+
+    public void setImageCover(String imageCover) {
+        this.imageCover = imageCover;
     }
 }

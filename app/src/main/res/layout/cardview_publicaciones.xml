@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageViewPubliCard"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            />
+        <TextView
+            android:id="@+id/textViewPubliCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/titulo_servicio"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="16dp"
+            android:maxLines="1"
+            android:textColor="@color/other_purple"
+            android:textStyle="bold"
+            />
+       <TextView
+           android:id="@+id/textViewPubliDesCard"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Descripción"
+           android:paddingLeft="10dp"
+           android:paddingRight="10dp"
+           android:textSize="16dp"
+           android:maxLines="1"
+           android:textColor="@color/other_purple"
+           />
+        <TextView
+            android:id="@+id/textViewPubliPrecioCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Precio"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="16dp"
+            android:maxLines="1"
+            android:textColor="@color/other_purple"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

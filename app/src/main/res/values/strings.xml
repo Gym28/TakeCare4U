@@ -7,6 +7,9 @@
     <string name="Confirmar">Confirmar</string>
     <string name="publicacion">PUBLICAR SERVICIO</string>
     <string name="cargar">CARGAR IMAGEN</string>
+    <string name="cerrar_sesion">CERRAR SESIÓN</string>
+    <string name="titulo_servicio">SERVICIO</string>
+    <string name="transitionname_picture">transitionnamepicture</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

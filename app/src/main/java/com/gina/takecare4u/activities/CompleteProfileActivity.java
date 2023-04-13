@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -35,6 +36,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
 
     TextInputEditText mTextInputName;
     TextInputEditText mTextInputZipCode;
+    TextInputEditText mTextInputPhone;
     Button mBtnRegister;
     //objeto mAuth de firebase
     AuthProvider mAuthProvider;
@@ -50,6 +52,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_complete_profile);
         mTextInputName=findViewById(R.id.textImputName);
         mTextInputZipCode=findViewById(R.id.textImputZipCode);
+        mTextInputPhone=findViewById(R.id.textInputPhone);
         mBtnRegister=findViewById(R.id.btnRegister);
         //instancia para controlar el registro de usuarios
         mAuthProvider = new AuthProvider();
@@ -74,10 +77,11 @@ public class CompleteProfileActivity extends AppCompatActivity {
     private void register(){
         String name = mTextInputName.getText().toString();
         String zipCode= mTextInputZipCode.getText().toString();
+        String phone = mTextInputPhone.getText().toString();
 
-        if(!name.isEmpty() && !zipCode.isEmpty()){
+        if(!name.isEmpty() && !zipCode.isEmpty() && !phone.isEmpty()){
                         if(zipCode.length()==5){
-                            upDateUser(name,zipCode);
+                            upDateUser(name,zipCode,phone);
                             Log.d(TAG, "createUserWithEmail:success");
                         }else{
                             Toast.makeText(this, "Verifica el Código Postal ", Toast.LENGTH_SHORT).show();
@@ -105,12 +109,14 @@ public class CompleteProfileActivity extends AppCompatActivity {
      *
      */
 
-    private void upDateUser(String name,String zipCode ){
+    private void upDateUser(String name,String zipCode , String phone){
                     String id = mAuthProvider.getUid();
                     Users user = new Users();
                     user.setId(id);
                     user.setNombre(name);
                     user.setZipCode(zipCode);
+                    user.setPhone(phone);
+                    user.setTimestamp(new Date().getTime());
                     mDialog.show();
                     muserProvider.upDate(user)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
