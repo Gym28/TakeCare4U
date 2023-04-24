@@ -82,7 +82,7 @@ public class CommentAdapter extends FirestoreRecyclerAdapter<Comments, CommentAd
                 if(documentSnapshot.exists()){
                     if(documentSnapshot.contains("nombre")){
                         String nombre = documentSnapshot.getString("nombre");
-                        holder.textViewNombre.setText(nombre);
+                        holder.textViewNombre.setText(nombre.toUpperCase());
 
                     }  if(documentSnapshot.contains("imageProfile")){
                         String imageProfile = documentSnapshot.getString("imageProfile");

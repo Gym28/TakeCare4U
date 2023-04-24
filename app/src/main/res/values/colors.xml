@@ -10,8 +10,12 @@
     <color name="purple_mio">#574B8E</color>
     <color name="dark_purple">#240747</color>
     <color name="other_purple">#361041</color>
-    <color name="rose_mio">#B37A92</color>
+    <color name="pink_mio">#F31870</color>
+    <color name="rose_claro">#FDBABB</color>
+    <color name="yellow_claro">#F6DB9E</color>
     <color name="blue_mio">#A4E3F8</color>
+    <color name="rose_mio">#B27A91</color>
+
 
 
 </resources>

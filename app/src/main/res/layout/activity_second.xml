@@ -7,6 +7,11 @@
     android:fitsSystemWindows="true"
     tools:context=".activities.SecondActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -322,20 +327,23 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnPublicacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PUBLICAR"
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/other_purple"
+            android:layout_gravity="bottom"
+            android:layout_margin="20dp"
+            android:textColor="@color/white"
+
+            />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnPublicacion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="PUBLICAR"
-        android:background="@drawable/round_button"
-        android:backgroundTint="@color/other_purple"
-        android:layout_gravity="bottom"
-        android:layout_margin="20dp"
-        android:textColor="@color/white"
+    </ScrollView>
 
-        />
 
 
 

@@ -13,6 +13,8 @@ import com.gina.takecare4u.activities.fragments.ChatFragment;
 import com.gina.takecare4u.activities.fragments.FilterFragment;
 import com.gina.takecare4u.activities.fragments.HomeFragment;
 import com.gina.takecare4u.activities.fragments.ProfileFragment;
+import com.gina.takecare4u.providers.AuthProvider;
+import com.gina.takecare4u.providers.TokenProvider;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -23,6 +25,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public class HomeActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigation;
+    TokenProvider mTokenProviderHome;
+    // para obtener el id del usuario que ingresó a nuestra aplicación
+    AuthProvider mAuthProvider;
 
 
     @Override
@@ -30,9 +35,13 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        mTokenProviderHome= new TokenProvider();
+        mAuthProvider = new AuthProvider();
+
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         openFragment(new HomeFragment());
+        createToken();
     }
 
     public void openFragment(Fragment fragment) {
@@ -41,6 +50,7 @@ public class HomeActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
 
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -67,4 +77,10 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    private void createToken(){
+
+        mTokenProviderHome.create(mAuthProvider.getUid());
+
+    }
 }

@@ -6,9 +6,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.fragments.HomeFragment"
     android:layout_marginBottom="50dp">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/rose_mio">
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/searchBar"
+        style="@style/MaterialSearchBarLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mt_hint="Busca por Precio"
+        app:mt_maxSuggestionsCount="10"
+        app:mt_placeholder="Buscar por precio"
+        app:mt_placeholderColor="@color/blue_mio"
+        app:mt_searchBarColor="@color/rose_mio"
+        app:mt_clearIconTint="@color/white"
+        app:mt_searchIconTint="@color/blue_mio"
+        app:mt_backIconTint="@color/white"
+        app:mt_menuIconTint="@color/blue_mio"
+        app:mt_leftTextSelectorTint="@color/white"/>
 
-    <include layout="@layout/action_bar_toolbar"/>
-
+</LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,22 +41,17 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             />
 
-
-
     </LinearLayout>
 
-    <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_purple"
         android:layout_gravity="bottom|right"
-        android:background="@color/other_purple"
         android:layout_margin="15dp"
-        />
-
-
+        android:background="@color/pink_mio"
+        android:src="@drawable/ic_add_purple"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 
 </FrameLayout>

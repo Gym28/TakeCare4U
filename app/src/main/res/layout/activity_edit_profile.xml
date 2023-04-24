@@ -28,7 +28,7 @@
         android:id="@+id/circleImageProfile"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:src="@drawable/profile"
+        android:src="@drawable/ic_usuario_regist"
         android:layout_marginTop="120dp"
 
         />
@@ -50,9 +50,9 @@
            android:gravity="center">
 
            <ImageView
-               android:layout_width="35dp"
-               android:layout_height="30dp"
-               android:src="@drawable/ic_purple_home"
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:src="@drawable/ic_zip"
                android:layout_marginRight="5dp"/>
 
            <com.google.android.material.textfield.TextInputLayout
@@ -76,13 +76,13 @@
            android:orientation="horizontal"
            android:layout_marginLeft="30dp"
            android:layout_marginRight="30dp"
-           android:layout_marginTop="20dp"
+           android:layout_marginTop="30dp"
            android:gravity="center">
 
            <ImageView
-               android:layout_width="35dp"
-               android:layout_height="28dp"
-               android:src="@drawable/ic_purple_phone"
+               android:layout_width="50dp"
+               android:layout_height="55dp"
+               android:src="@drawable/ic_telefono_pink"
                android:layout_marginRight="5dp"/>
 
            <com.google.android.material.textfield.TextInputLayout
@@ -111,9 +111,9 @@
         android:layout_marginTop="470dp"
         android:gravity="center">
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="28dp"
-            android:src="@drawable/ic_purple_lock"
+            android:layout_width="50dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_contrase_a_pink"
 
          />
         <TextView

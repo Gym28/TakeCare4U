@@ -42,10 +42,11 @@
                     android:id="@+id/circleImageProfileProfile"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:src="@drawable/profile"
+                    android:src="@drawable/ic_usuario_regist"
                     android:layout_marginTop="120dp"
                     app:civ_border_color="@color/white"
                     app:civ_border_width="5dp"
+                    app:civ_circle_background_color="#FDBABB"
 
                     />
                 <LinearLayout
@@ -186,8 +187,13 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_marginTop="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
+             <TextView
+            android:id="@+id/textViewSinPostProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sin Publicacioens"
@@ -197,6 +203,15 @@
             android:layout_marginLeft="20dp"
             android:textSize="18sp"
             android:textStyle="italic"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerThePost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="45dp"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                />
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 

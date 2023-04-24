@@ -7,7 +7,7 @@
     <item
         android:id="@+id/itemfilters"
         android:icon="@drawable/ic_filter_purple"
-        android:title="Filtros" />
+        android:title="Servicios" />
 
     <item
         android:id="@+id/itemChats"

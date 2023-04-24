@@ -1,6 +1,7 @@
 package com.gina.takecare4u.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,23 +23,32 @@ import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.gina.takecare4u.R;
+import com.gina.takecare4u.activities.Utils.RelativeTime;
 import com.gina.takecare4u.adapter.CommentAdapter;
 import com.gina.takecare4u.adapter.PubliAdapter;
 import com.gina.takecare4u.adapter.SliderAdapter;
 import com.gina.takecare4u.modelos.Comments;
+import com.gina.takecare4u.modelos.FCMRBody;
+import com.gina.takecare4u.modelos.FCMResponse;
 import com.gina.takecare4u.modelos.Publicaciones;
 import com.gina.takecare4u.modelos.SliderItem;
 import com.gina.takecare4u.modelos.Users;
 import com.gina.takecare4u.providers.AuthProvider;
 import com.gina.takecare4u.providers.CommentProvider;
+import com.gina.takecare4u.providers.LikeProvider;
+import com.gina.takecare4u.providers.NotificationProvider;
 import com.gina.takecare4u.providers.PublicacionProvider;
+import com.gina.takecare4u.providers.TokenProvider;
 import com.gina.takecare4u.providers.UsersProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -46,21 +57,28 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PubliDetailActivity extends AppCompatActivity {
-    CircleImageView mCircleImageViewBack;
+
     SliderView mSliderView;
     SliderAdapter mSliderAdapter;
     List<SliderItem> mSliderItems = new ArrayList<>();
     String mExtrapublicacionId;
     String midUser="";
 
+    private static final String TAG = "PubliDetailActivity";
 
-    TextView mTexViewPubliTitulo, mTextViewPubliDescription, mTextViewPubliNombre, mTextViewPubliPhone,  mTextViewPublinameTipo, mTextViewPubliPrecio;
+    TextView mTexViewPubliTitulo, mTextViewPubliDescription, mTextViewPubliNombre, mTextViewPubliPhone,  mTextViewPublinameTipo,
+            mTextViewPubliPrecio , mTextViewRelativeTime, mTextViewPubliNumLikes;
     ImageView mImageViewPubliTipo;
     CircleImageView mCircleViewPubliProfile;
     Button mbtnShowProfile;
@@ -72,6 +90,10 @@ public class PubliDetailActivity extends AppCompatActivity {
     PublicacionProvider mPublicacionProvider;
     CommentProvider mCommentProvider;
     AuthProvider mAuthProvider;
+    LikeProvider mLikeProvider;
+    NotificationProvider mNotificationProvider;
+    TokenProvider mTokenProvider;
+    Toolbar mToolbar;
 
 
 
@@ -88,13 +110,19 @@ public class PubliDetailActivity extends AppCompatActivity {
          mTextViewPubliPhone = findViewById(R.id.texViewPubliPhone);
          mTextViewPubliDescription = findViewById(R.id.textViewPubliDescripcion);
          mTextViewPublinameTipo = findViewById(R.id.textViewPublinameTipo);
+         mTextViewRelativeTime = findViewById(R.id.textViewRelavieTime);
+         mTextViewPubliNumLikes = findViewById(R.id.textViewNumLikes);
          mTextViewPubliPrecio = findViewById(R.id.textViewPubliPrecio);
          mImageViewPubliTipo = findViewById(R.id.imageViewPubliTipo);
          mCircleViewPubliProfile = findViewById(R.id.circleImagePubliProfile);
          mbtnShowProfile =findViewById(R.id.btnShowProfile);
-         mCircleImageViewBack= findViewById(R.id.circleImagePubliBack);
+
          mFabComment = findViewById(R.id.fabComentPubli);
          mRecyclerViewComment = findViewById(R.id.recyclerViewComment);
+         mToolbar = findViewById(R.id.toolbarUserDetail);
+            setSupportActionBar(mToolbar);
+            getSupportActionBar().setTitle("");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
          //listamos comentarios
          LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PubliDetailActivity.this);
          mRecyclerViewComment.setLayoutManager(linearLayoutManager);
@@ -103,10 +131,12 @@ public class PubliDetailActivity extends AppCompatActivity {
          mPublicacionProvider = new PublicacionProvider();
          mCommentProvider = new CommentProvider();
          mAuthProvider = new AuthProvider();
+         mLikeProvider = new LikeProvider();
+         mNotificationProvider = new NotificationProvider();
+         mTokenProvider = new TokenProvider();
 
         mExtrapublicacionId = getIntent().getStringExtra("id");
 
-        getPubli();
 
         mFabComment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,18 +145,34 @@ public class PubliDetailActivity extends AppCompatActivity {
             }
         });
 
-        mCircleImageViewBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         mbtnShowProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             goToShowProfile();
             }
+        });
+
+        getPubli();
+        getNumLikes();
+
+    }
+
+    private void getNumLikes() {
+        mLikeProvider.getLikeByPost(mExtrapublicacionId).addSnapshotListener((value, error) -> {
+            mAuthProvider.getUid();
+            if (error!=null){
+                Log.d(TAG,"Error:"+error.getMessage());
+            } else {
+            int numLikes = value.size();
+            if(numLikes ==1) {
+                mTextViewPubliNumLikes.setText(numLikes + " Like");
+            }
+            else {
+                mTextViewPubliNumLikes.setText(numLikes + " Likes");
+            }
+            }
+
         });
 
 
@@ -206,6 +252,7 @@ public class PubliDetailActivity extends AppCompatActivity {
             @Override
             public void onComplete(Task<Void> task) {
                 if(task.isSuccessful()){
+                    sendNotification(comentario);
                     Toast.makeText(PubliDetailActivity.this, "Tu comentario ha sido guardado", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -213,6 +260,59 @@ public class PubliDetailActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void sendNotification(String comment) {
+        //usuario del que obtenemos la información del post
+        if (midUser==null){
+            return;
+        }
+        mTokenProvider.getToken(midUser).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    if(documentSnapshot.contains("token")){
+                        String token = documentSnapshot.getString("token");
+                        Map<String, String> data = new HashMap<>();
+                        data.put("title", "NUEVO COMENTARIO");
+                        data.put("body", comment);
+                        FCMRBody body = new FCMRBody(token, "high", "4500s", data);
+                        mNotificationProvider.sendNotification(body).enqueue(new Callback<FCMResponse>() {
+                            @Override
+                            public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
+                                if(response.body()!=null){
+                                    if(response.body().getSuccess()==1){
+                                        Toast.makeText(PubliDetailActivity.this, "La notificación ha sido enviada", Toast.LENGTH_SHORT).show();
+
+
+                                    }
+                                    else {
+                                        Toast.makeText(PubliDetailActivity.this, "La notificación no fue enviada", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else {
+                                    Toast.makeText(PubliDetailActivity.this, "La notificación no fue enviada", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<FCMResponse> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                }
+                else {
+                    Toast.makeText(PubliDetailActivity.this, "Sin token asignado", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+
+        });
+
+
     }
 
     private void goToShowProfile() {
@@ -285,6 +385,10 @@ public class PubliDetailActivity extends AppCompatActivity {
                     if(documentSnapshot.contains("idUser")){
                          midUser = documentSnapshot.getString("idUser");
                         getUserInfo(midUser);
+                    }  if(documentSnapshot.contains("timestamp")){
+                         long timestamp = documentSnapshot.getLong("timestamp");
+                         String relativetime = RelativeTime.getTimeAgo(timestamp,PubliDetailActivity.this);
+                         mTextViewRelativeTime.setText(relativetime);
                     }
 
                     instanceSlider();

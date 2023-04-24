@@ -21,10 +21,20 @@ public class PublicacionProvider {
         return mCollection.document().set(publicaciones);
     }
 
-    //consultamos todas las publicaciones ordenados por titulo en forma descendente
+    public Task<Void> delete (String idDocument){
+
+        return mCollection.document(idDocument).delete();
+    }
+
+    public Task<DocumentSnapshot> getPostById(String id){
+        return mCollection.document(id).get();
+    }
+
+    //consultamos todas las publicaciones ordenados por fecha en forma descendente
     public Query getAll(){
         return mCollection.orderBy("timestamp", Query.Direction.DESCENDING);
     }
+
 
     //Obtenermos los post que ha hecho el usuario
 
@@ -32,7 +42,17 @@ public class PublicacionProvider {
         return mCollection.whereEqualTo("idUser", id);
     }
 
-    public Task<DocumentSnapshot> getPostById(String id){
-        return mCollection.document(id).get();
+    public Query getPostByServicio(String precio){
+        return mCollection.orderBy("precio").startAt(precio).endAt(precio+'\uf8ff');
+
+     }
+
+    public Query getPubliByServiceandTimestamp(String service){
+        return mCollection.whereEqualTo("servicio",service)
+                          .orderBy("timestamp", Query.Direction.DESCENDING);
     }
+
+
+
+
 }

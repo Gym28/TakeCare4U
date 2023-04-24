@@ -26,8 +26,7 @@ public class CommentProvider {
     public Query getAll(){
         return mCollection.orderBy("nombre", Query.Direction.DESCENDING);
     }
-
-    public Query getidPost(){
+     public Query getidPost(){
         return mCollection.orderBy("idPost", Query.Direction.DESCENDING);
     }
 
@@ -39,7 +38,9 @@ public class CommentProvider {
     }
 
     public Query getCommentsByPost(String idPost){
-        return mCollection.whereEqualTo("idPost", idPost);
+        return mCollection
+                .whereEqualTo("idPost", idPost)
+                .orderBy("timestamp", Query.Direction.DESCENDING);
     }
 
 

@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.storage.UploadTask;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -65,6 +66,7 @@ public class SecondActivity extends AppCompatActivity {
     ImageView mImageViewAncianos;
     ImageView mImageViewMascotas;
     TextView mTextViewServicio;
+    SliderView mSliderView;
     String mServicio = "";
     String mTitle = "";
     String mDescription = "";

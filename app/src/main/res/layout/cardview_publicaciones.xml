@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/imageViewPubliCard"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:scaleType="centerCrop"
             />
         <TextView
@@ -30,6 +30,18 @@
             android:textColor="@color/other_purple"
             android:textStyle="bold"
             />
+        <TextView
+            android:id="@+id/textViewUsuarioCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ususario"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="13dp"
+            android:maxLines="1"
+            android:textColor="@color/other_purple"
+             />
        <TextView
            android:id="@+id/textViewPubliDesCard"
            android:layout_width="match_parent"
@@ -38,7 +50,7 @@
            android:paddingLeft="10dp"
            android:paddingRight="10dp"
            android:textSize="16dp"
-           android:maxLines="1"
+           android:maxLines="2"
            android:textColor="@color/other_purple"
            />
         <TextView
@@ -52,6 +64,36 @@
             android:maxLines="1"
             android:textColor="@color/other_purple"
             />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="15dp"
+            android:paddingBottom="10dp">
+        <ImageView
+            android:id="@+id/imageViewLikeCard"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_like_gris"/>
+            <TextView
+                android:id="@+id/textViewlikesCard"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="O LIKES"
+                android:layout_weight="1"
+                android:gravity="center|right"
+                />
+        </LinearLayout>
+
 
 
 

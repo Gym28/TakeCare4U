@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
@@ -7,44 +6,55 @@
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable/button_border.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/drawable/ic__person_blanco.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable/ic_add_purple.xml" value="0.13645833333333332" />
         <entry key="app/src/main/res/drawable/ic_address_purple.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable/ic_baseline_mail_24.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable/ic_chat_purple.xml" value="0.13645833333333332" />
         <entry key="app/src/main/res/drawable/ic_filter_purple.xml" value="0.2421875" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.24166666666666667" />
+        <entry key="app/src/main/res/drawable/ic_home_purple.xml" value="0.13645833333333332" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable/ic_lock_.xml" value="0.14895833333333333" />
+        <entry key="app/src/main/res/drawable/ic_lock_open_purpe.xml" value="0.36615384615384616" />
         <entry key="app/src/main/res/drawable/ic_lock_purple.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable/ic_mail.xml" value="0.14895833333333333" />
+        <entry key="app/src/main/res/drawable/ic_password.xml" value="0.13645833333333332" />
         <entry key="app/src/main/res/drawable/ic_person_purple.xml" value="0.29739583333333336" />
         <entry key="app/src/main/res/drawable/ic_person_white.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable/ic_personal_contact.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable/ic_pink_lock.xml" value="0.13645833333333332" />
+        <entry key="app/src/main/res/drawable/ic_purple_arrow_left.xml" value="0.13645833333333332" />
         <entry key="app/src/main/res/drawable/ic_purple_email.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable/ic_white_back.xml" value="0.13645833333333332" />
         <entry key="app/src/main/res/drawable/round_button.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/drawable/round_button2.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/layout/action_bar_toolbar.xml" value="0.23333333333333334" />
         <entry key="app/src/main/res/layout/activity_complete_profile.xml" value="0.18691588785046728" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.2640625" />
+        <entry key="app/src/main/res/layout/activity_filter.xml" value="0.27171903881700554" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.28125" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_publi_detail.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_publi_detail.xml" value="0.14541213063763608" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_registro.xml" value="0.22552083333333334" />
         <entry key="app/src/main/res/layout/activity_second.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_user_profile.xml" value="0.1859375" />
         <entry key="app/src/main/res/layout/card_view_comments.xml" value="0.1859375" />
-        <entry key="app/src/main/res/layout/cardview_comments.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/cardview_publicaciones.xml" value="0.2265625" />
+        <entry key="app/src/main/res/layout/cardview_comments.xml" value="0.43526170798898073" />
+        <entry key="app/src/main/res/layout/cardview_publicaciones.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/cardview_the_post.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.2265625" />
         <entry key="app/src/main/res/layout/fragment_chats.xml" value="0.2265625" />
         <entry key="app/src/main/res/layout/fragment_filter.xml" value="0.2265625" />
         <entry key="app/src/main/res/layout/fragment_filters.xml" value="0.2265625" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2265625" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="app/src/main/res/layout/slider_layout_item.xml" value="0.1859375" />
         <entry key="app/src/main/res/menu/botton_navigation_menu.xml" value="0.28125" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.33" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_Mi_App.xml" value="0.2234375" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2375" />
         <entry key="app/src/main/res/xml/file_paths.xml" value="0.25625" />
       </map>

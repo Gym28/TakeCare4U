@@ -1,14 +1,22 @@
 package com.gina.takecare4u.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.gina.takecare4u.R;
+import com.gina.takecare4u.activities.FilterActivity;
+import com.gina.takecare4u.adapter.PubliAdapter;
+import com.gina.takecare4u.providers.AuthProvider;
+import com.gina.takecare4u.providers.PublicacionProvider;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +24,12 @@ import com.gina.takecare4u.R;
  * create an instance of this fragment.
  */
 public class FilterFragment extends Fragment {
+
+    View mViewFilter;
+    CardView mCardViewOld;
+    CardView mCardViewChild;
+    CardView mCardViewPet;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +75,23 @@ public class FilterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_filter, container, false);
+       mViewFilter= inflater.inflate(R.layout.fragment_filter, container, false);
+       mCardViewOld =    mViewFilter.findViewById(R.id.cardViewOldFilerCard);
+       mCardViewChild = mViewFilter.findViewById(R.id.cardViewChildCard);
+       mCardViewPet=    mViewFilter.findViewById(R.id.cardViewPetCard);
+
+       mCardViewOld.setOnClickListener(v -> goToFilterActivity("ADULTOS MAYORES"));
+       mCardViewChild.setOnClickListener(v -> goToFilterActivity("NIÑOS"));
+       mCardViewPet.setOnClickListener(v -> goToFilterActivity("MASCOTAS"));
+
+        return mViewFilter;
+    }
+
+    private void goToFilterActivity(String servicio){
+        Intent intent = new Intent(getContext(), FilterActivity.class);
+        intent.putExtra("Servicio", servicio);
+        startActivity(intent);
+
+
     }
 }

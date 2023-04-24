@@ -1,34 +1,51 @@
 package com.gina.takecare4u.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.gina.takecare4u.R;
+import com.gina.takecare4u.adapter.ThePostAdapter;
+import com.gina.takecare4u.modelos.Publicaciones;
 import com.gina.takecare4u.providers.AuthProvider;
 import com.gina.takecare4u.providers.PublicacionProvider;
 import com.gina.takecare4u.providers.UsersProvider;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    TextView mtextViewPhone, mtextViewPostNumber, mtextViewNombre, mtextViewEmail, mtextViewZipCode;
+    TextView mtextViewPhone, mtextViewPostNumber, mtextViewNombre, mtextViewEmail, mtextViewZipCode, mtexViewSinPost;
     ImageView mImageViewCover;
     CircleImageView mCircleImageProfile;
-    CircleImageView mCircleImageViewBack;
 
     UsersProvider mUsersProvider;
     AuthProvider mAuthProvider;
     PublicacionProvider mPublicacionesProvider;
+    ThePostAdapter mThePostAdapter;
+    RecyclerView mRecicleViewThePost;
+    Toolbar mtoolbar;
+
+    private static final String TAG = "UserProfileActivity";
 
     String mExtraIdUser;
 
@@ -44,22 +61,68 @@ public class UserProfileActivity extends AppCompatActivity {
         mtextViewPostNumber = findViewById(R.id.textViewPostNumber);
         mCircleImageProfile = findViewById(R.id.circleImageProfileProfile);
         mImageViewCover = findViewById(R.id.imageViewCoverProfile);
-        mCircleImageViewBack= findViewById(R.id.circleImagePubliBack);
+        mtexViewSinPost =  findViewById(R.id.textViewSinPostProfile);
 
         mUsersProvider = new UsersProvider();
         mAuthProvider = new AuthProvider();
         mPublicacionesProvider = new PublicacionProvider();
+        mtoolbar = findViewById(R.id.toolbarUserProfile);
+        setSupportActionBar(mtoolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mRecicleViewThePost = findViewById(R.id.recyclerThePost);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(UserProfileActivity.this);
+        mRecicleViewThePost.setLayoutManager(linearLayoutManager);
 
         mExtraIdUser = getIntent().getStringExtra("idUser");
-        mCircleImageViewBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         getUser();
         getPostNumber();
+        existPost();
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //consulta a base de datos
+        Query query = mPublicacionesProvider.getPostByUser(mExtraIdUser);
+        FirestoreRecyclerOptions<Publicaciones> options = new FirestoreRecyclerOptions.Builder<Publicaciones>()
+                .setQuery(query, Publicaciones.class)
+                .build();
+        mThePostAdapter = new ThePostAdapter(options, UserProfileActivity.this);
+        mRecicleViewThePost.setAdapter(mThePostAdapter);
+        mThePostAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mThePostAdapter.stopListening();
+    }
+
+    private void existPost() {
+        mPublicacionesProvider.getPostByUser(mExtraIdUser).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot value, FirebaseFirestoreException error) {
+
+                    if (error != null) {
+                        Log.d(TAG, "Error:" + error.getMessage());
+                    } else {
+                        int numberPost = value.size();
+                        if (numberPost > 0) {
+                            mtexViewSinPost.setText("PUBLICACIONES");
+                            mtexViewSinPost.setTextColor(getResources().getColor(R.color.pink_mio));
+                        } else {
+                            mtexViewSinPost.setText("SIN PUBLICACIONES");
+                            mtexViewSinPost.setTextColor(getResources().getColor(R.color.other_purple));
+                        }
+                    }
+
+            }
+        });
 
 
     }
@@ -113,5 +176,14 @@ public class UserProfileActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return true;
     }
 }

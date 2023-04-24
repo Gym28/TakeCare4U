@@ -22,7 +22,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/other_purple"/>
+                android:background="@color/rose_mio"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -53,7 +53,7 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_person_purple"
+                android:src="@drawable/ic_usuario_grl"
                 android:layout_marginRight="5dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -84,9 +84,9 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="40dp"
+                android:layout_width="45dp"
                 android:layout_height="60dp"
-                android:src="@drawable/ic_home_purple"
+                android:src="@drawable/ic_zip"
                 android:layout_marginRight="5dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -116,9 +116,9 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="35dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_phone"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_telefono_pink"
                 android:layout_marginRight="5dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -149,17 +149,17 @@
         android:layout_gravity="bottom"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="30dp"
-        android:backgroundTint="@color/other_purple"
+        android:backgroundTint="@color/rose_mio"
         android:background="@drawable/round_button"
         />
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/profile"
+        android:src="@drawable/ic_usuario_regist"
         android:layout_gravity="top|center"
         android:layout_marginTop="140dp"
         app:civ_border_color="@color/purple_mio"
-        app:civ_circle_background_color="@color/rose_mio"
+        app:civ_circle_background_color="#F6DB9E"
         app:civ_border_width="4dp"
 
 
