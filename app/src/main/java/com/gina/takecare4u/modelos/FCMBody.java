@@ -2,14 +2,14 @@ package com.gina.takecare4u.modelos;
 
 import java.util.Map;
 
-public class FCMRBody {
+public class FCMBody {
 
     private String to;
     private String priority;
     private String ttl;
     private Map<String, String> data;
 
-    public FCMRBody(String to, String priority, String ttl, Map<String, String> data) {
+    public FCMBody(String to, String priority, String ttl, Map<String, String> data) {
         this.to = to;
         this.priority = priority;
         this.ttl = ttl;

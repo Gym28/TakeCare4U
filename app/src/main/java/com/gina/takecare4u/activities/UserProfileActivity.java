@@ -21,6 +21,7 @@ import com.gina.takecare4u.providers.AuthProvider;
 import com.gina.takecare4u.providers.PublicacionProvider;
 import com.gina.takecare4u.providers.UsersProvider;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -44,6 +45,7 @@ public class UserProfileActivity extends AppCompatActivity {
     ThePostAdapter mThePostAdapter;
     RecyclerView mRecicleViewThePost;
     Toolbar mtoolbar;
+    FloatingActionButton mFabChat;
 
     private static final String TAG = "UserProfileActivity";
 
@@ -67,6 +69,8 @@ public class UserProfileActivity extends AppCompatActivity {
         mAuthProvider = new AuthProvider();
         mPublicacionesProvider = new PublicacionProvider();
         mtoolbar = findViewById(R.id.toolbarUserProfile);
+        mFabChat = findViewById(R.id.fabButtonChat);
+
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,10 +81,21 @@ public class UserProfileActivity extends AppCompatActivity {
 
         mExtraIdUser = getIntent().getStringExtra("idUser");
 
+        mFabChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToChatActivity();
+            }
+        });
+
         getUser();
         getPostNumber();
         existPost();
 
+
+    }
+
+    private void goToChatActivity() {
 
     }
 

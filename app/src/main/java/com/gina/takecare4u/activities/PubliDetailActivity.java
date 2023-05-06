@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,14 +24,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.gina.takecare4u.R;
 import com.gina.takecare4u.activities.Utils.RelativeTime;
 import com.gina.takecare4u.adapter.CommentAdapter;
-import com.gina.takecare4u.adapter.PubliAdapter;
 import com.gina.takecare4u.adapter.SliderAdapter;
 import com.gina.takecare4u.modelos.Comments;
-import com.gina.takecare4u.modelos.FCMRBody;
+import com.gina.takecare4u.modelos.FCMBody;
 import com.gina.takecare4u.modelos.FCMResponse;
-import com.gina.takecare4u.modelos.Publicaciones;
 import com.gina.takecare4u.modelos.SliderItem;
-import com.gina.takecare4u.modelos.Users;
 import com.gina.takecare4u.providers.AuthProvider;
 import com.gina.takecare4u.providers.CommentProvider;
 import com.gina.takecare4u.providers.LikeProvider;
@@ -45,11 +41,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -267,46 +259,44 @@ public class PubliDetailActivity extends AppCompatActivity {
         if (midUser==null){
             return;
         }
-        mTokenProvider.getToken(midUser).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()){
-                    if(documentSnapshot.contains("token")){
-                        String token = documentSnapshot.getString("token");
-                        Map<String, String> data = new HashMap<>();
-                        data.put("title", "NUEVO COMENTARIO");
-                        data.put("body", comment);
-                        FCMRBody body = new FCMRBody(token, "high", "4500s", data);
-                        mNotificationProvider.sendNotification(body).enqueue(new Callback<FCMResponse>() {
-                            @Override
-                            public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
-                                if(response.body()!=null){
-                                    if(response.body().getSuccess()==1){
-                                        Toast.makeText(PubliDetailActivity.this, "La notificación ha sido enviada", Toast.LENGTH_SHORT).show();
+        mTokenProvider.getToken(midUser).addOnSuccessListener(documentSnapshot -> {
+            if(documentSnapshot.exists()){
+                if(documentSnapshot.contains("token")){
+                    String token = documentSnapshot.getString("token");
+                    Map<String, String> data = new HashMap<>();
+                    data.put("title", "NUEVO COMENTARIO");
+                    data.put("body", comment);
+                    FCMBody body = new FCMBody(token, "high", "4500s", data);
+                    mNotificationProvider.sendNotification(body).enqueue(new Callback<FCMResponse>() {
+                        @Override
+                        public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
+                            if(response.body()!=null){
+                                if(response.body().getSuccess()==1){
+                                    Toast.makeText(PubliDetailActivity.this, "La notificación ha sido enviada", Toast.LENGTH_SHORT).show();
 
 
-                                    }
-                                    else {
-                                        Toast.makeText(PubliDetailActivity.this, "La notificación no fue enviada", Toast.LENGTH_SHORT).show();
-                                    }
                                 }
                                 else {
                                     Toast.makeText(PubliDetailActivity.this, "La notificación no fue enviada", Toast.LENGTH_SHORT).show();
-
                                 }
+                             }
+                           else {
+                                Toast.makeText(PubliDetailActivity.this, "La notificación no enviada", Toast.LENGTH_SHORT).show();
+
                             }
+                        }
 
-                            @Override
-                            public void onFailure(Call<FCMResponse> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<FCMResponse> call, Throwable t) {
 
-                            }
-                        });
-                    }
+                        }
+                    });
                 }
-                else {
-                    Toast.makeText(PubliDetailActivity.this, "Sin token asignado", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(PubliDetailActivity.this, "Sin token asignado", Toast.LENGTH_SHORT).show();
 
-                }
+
 
             }
 

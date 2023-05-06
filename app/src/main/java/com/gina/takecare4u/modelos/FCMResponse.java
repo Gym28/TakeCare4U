@@ -9,7 +9,7 @@ public class FCMResponse {
     private int success;
     private int failure;
     private int canonical_ids;
-    ArrayList<Object> results= new ArrayList <Object>();
+    ArrayList<Object> results= new ArrayList<Object>();
 
 
     public FCMResponse(long multicast_id, int success, int failure, int canonical_ids, ArrayList<Object> results) {

@@ -80,7 +80,7 @@ public class FilterFragment extends Fragment {
        mCardViewChild = mViewFilter.findViewById(R.id.cardViewChildCard);
        mCardViewPet=    mViewFilter.findViewById(R.id.cardViewPetCard);
 
-       mCardViewOld.setOnClickListener(v -> goToFilterActivity("ADULTOS MAYORES"));
+       mCardViewOld.setOnClickListener(v -> goToFilterActivity("ADULTO MAYOR"));
        mCardViewChild.setOnClickListener(v -> goToFilterActivity("NIÑOS"));
        mCardViewPet.setOnClickListener(v -> goToFilterActivity("MASCOTAS"));
 

@@ -195,5 +195,14 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabButtonChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_chat_purple"
+        tools:ignore="SpeakableTextPresentCheck" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
