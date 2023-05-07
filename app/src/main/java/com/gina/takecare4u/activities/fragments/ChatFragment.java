@@ -1,14 +1,27 @@
 package com.gina.takecare4u.activities.fragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.gina.takecare4u.R;
+import com.gina.takecare4u.adapter.ChatAdapter;
+import com.gina.takecare4u.adapter.PubliAdapter;
+import com.gina.takecare4u.modelos.Chats;
+import com.gina.takecare4u.modelos.Publicaciones;
+import com.gina.takecare4u.providers.AuthProvider;
+import com.gina.takecare4u.providers.ChatProvider;
+import com.google.firebase.firestore.Query;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +29,13 @@ import com.gina.takecare4u.R;
  * create an instance of this fragment.
  */
 public class ChatFragment extends Fragment {
+
+    ChatAdapter mchatAdapter;
+    RecyclerView mRecyclerView;
+    View mView;
+
+    ChatProvider mChatProvider;
+    AuthProvider mAuthProvider;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +81,29 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false);
+        mView =inflater.inflate(R.layout.fragment_chat, container, false);
+        mRecyclerView = mView.findViewById(R.id.recyclerViewChat);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        mChatProvider = new ChatProvider();
+        mAuthProvider= new AuthProvider();
+        return mView;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+            //consulta a base de datos
+            Query query = mChatProvider.getAll(mAuthProvider.getUid());
+            Log.e(TAG,"query:"+query);
+            FirestoreRecyclerOptions<Chats> options = new FirestoreRecyclerOptions.Builder<Chats>()
+                    .setQuery(query, Chats.class)
+                    .build();
+            mchatAdapter = new ChatAdapter(options, getContext());
+            mRecyclerView.setAdapter(mchatAdapter);
+            mchatAdapter.startListening();
+    }
+
 }

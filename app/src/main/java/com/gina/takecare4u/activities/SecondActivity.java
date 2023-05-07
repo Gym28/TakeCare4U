@@ -328,7 +328,7 @@ public class SecondActivity extends AppCompatActivity {
                                                 Publicaciones post = new Publicaciones();
                                                 post.setImagen1(url);
                                                 post.setImagen2(url2);
-                                                post.setNombre(mTitle);
+                                                post.setNombre(mTitle.toLowerCase());
                                                 post.setDescripcion(mDescription);
                                                 post.setPrecio(mPrice);
                                                 post.setServicio(mServicio);

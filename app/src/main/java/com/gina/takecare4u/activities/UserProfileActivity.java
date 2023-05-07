@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -80,6 +81,9 @@ public class UserProfileActivity extends AppCompatActivity {
         mRecicleViewThePost.setLayoutManager(linearLayoutManager);
 
         mExtraIdUser = getIntent().getStringExtra("idUser");
+        if(mAuthProvider.getUid().equals(mExtraIdUser)){
+            mFabChat.setVisibility(View.GONE);
+            }
 
         mFabChat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +99,14 @@ public class UserProfileActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * mExtraIdUser: es el id del usuario activo
+     */
     private void goToChatActivity() {
+        Intent intent = new Intent(UserProfileActivity.this, ChatActivity.class);
+            intent.putExtra("idUser1", mAuthProvider.getUid());
+            intent.putExtra("idUser2", mExtraIdUser);
+            startActivity(intent);
 
     }
 

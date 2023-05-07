@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/rounded_linear_layout"
+    android:paddingRight="15dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="15dp"
+    android:paddingTop="10dp"
+    android:layout_margin="10dp">
+    <TextView
+        android:id="@+id/textViewMessageCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_weight="1"
+        android:textColor="@color/white"
+        android:text="Nuevo Mensaje"/>
+    <TextView
+        android:id="@+id/textViewDateCardMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha"
+        android:textColor="@color/gray_mio"
+        android:textSize="12sp"
+        android:layout_marginLeft="4dp"
+        android:layout_gravity="bottom"/>
+    <ImageView
+        android:id="@+id/imageViewCheckCardMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:src="@drawable/icon_check_grey"
+        android:layout_gravity="bottom"/>
+
+</LinearLayout>

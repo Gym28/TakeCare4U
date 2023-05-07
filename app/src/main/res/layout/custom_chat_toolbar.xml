@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rose_mio">
+
+
+    <ImageView
+        android:id="@+id/imageViewBackChat"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_white_back"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="7dp"/>
+    
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageViewUserToolbar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_usuario_grl"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/imageViewBackChat"
+
+        />
+        <TextView
+            android:id="@+id/textViewUserToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre de usuario"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:maxLines="1"
+            android:layout_toRightOf="@id/circleImageViewUserToolbar"
+            />
+        <TextView
+            android:id="@+id/textViewRelativeTimeChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hace un momento "
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:layout_toRightOf="@id/circleImageViewUserToolbar"
+            android:layout_below="@+id/textViewUserToolbar"
+
+            />
+
+</RelativeLayout>
