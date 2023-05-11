@@ -1,12 +1,18 @@
 package com.gina.takecare4u.adapter;
+import static android.graphics.Color.DKGRAY;
+import static android.graphics.Color.WHITE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -37,6 +43,7 @@ public class MessageAdapter extends FirestoreRecyclerAdapter<Messages, MessageAd
     CommentProvider mCommentProvider;
     AuthProvider mAuthProvider;
     String idPost = "";
+
     private static final String TAG = "COMMENTADAPTER";
 
     public MessageAdapter(FirestoreRecyclerOptions<Messages> options, Context context){
@@ -56,11 +63,40 @@ public class MessageAdapter extends FirestoreRecyclerAdapter<Messages, MessageAd
         String MessageId= document.getId();
         holder.textViewMessageCard.setText(message.getMessage());
 
-        String relativeTime = RelativeTime.getTimeAgo(message.getTimeestamp(), context);
+        String relativeTime = RelativeTime.timeFormatAMPM(message.getTimeestamp(), context);
         holder.textViewDateCard.setText(relativeTime);
 
+        if(message.getIdSender().equals(mAuthProvider.getUid())) {
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            params.setMargins(150, 0, 0, 0);
+            holder.linearLayoutMessage.setLayoutParams(params);
+            holder.linearLayoutMessage.setPadding(30, 20, 25, 20);
+            holder.linearLayoutMessage.setBackground(context.getResources().getDrawable(R.drawable.rounded_linear_layout));
+            holder.imageViewCheckCardMessage.setVisibility(View.VISIBLE);
+            holder.textViewMessageCard.setTextColor(WHITE);
+            holder.textViewDateCard.setTextColor(DKGRAY);
+        }
+         else {RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+            params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            params.setMargins(0, 0, 150, 0);
+            holder.linearLayoutMessage.setLayoutParams(params);
+            holder.linearLayoutMessage.setPadding(30, 20, 30, 20);
+            holder.linearLayoutMessage.setBackground(context.getResources().getDrawable(R.drawable.rounded_linear_layout_grey));
+            holder.imageViewCheckCardMessage.setVisibility(View.GONE);
+            holder.textViewMessageCard.setTextColor(DKGRAY);
+            holder.textViewDateCard.setTextColor(DKGRAY);
+        }
 
-    }
+
+
+        }
 
 
     private void getFecha(long date, ViewHolder holder){
@@ -83,7 +119,9 @@ public class MessageAdapter extends FirestoreRecyclerAdapter<Messages, MessageAd
             TextView textViewMessageCard;
             TextView textViewDateCard;
             ImageView imageViewCheckCardMessage;
+            LinearLayout linearLayoutMessage;
             View viewHolder;
+
 
             public ViewHolder (View view){
                 super(view);
@@ -91,6 +129,7 @@ public class MessageAdapter extends FirestoreRecyclerAdapter<Messages, MessageAd
                 textViewMessageCard = view.findViewById(R.id.textViewMessageCard);
                 textViewDateCard = view.findViewById(R.id.textViewDateCardMessage);
                 imageViewCheckCardMessage= view.findViewById(R.id.imageViewCheckCardMessage);
+                linearLayoutMessage = view.findViewById(R.id.linearLayoutCardMessage);
                 viewHolder = view;
             }
     }

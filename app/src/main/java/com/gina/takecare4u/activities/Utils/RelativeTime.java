@@ -32,7 +32,7 @@ public class RelativeTime extends Application {
         } else if (diff < 2 * MINUTE_MILLIS) {
             return "Hace un minuto";
         } else if (diff < 50 * MINUTE_MILLIS) {
-            return "Hace " + diff / MINUTE_MILLIS + " minutos";
+            return diff / MINUTE_MILLIS + " minutos";
         } else if (diff < 90 * MINUTE_MILLIS) {
             return "Hace una hora";
         } else if (diff < 24 * HOUR_MILLIS) {
@@ -44,12 +44,34 @@ public class RelativeTime extends Application {
         }
     }
 
-    public static String timeFormatAMPM(long timestamp) {
+    public static String timeFormatAMPM(long time, Context ctx) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a");
-        String dateString = formatter.format(new Date(timestamp));
+       // String dateString = formatter.format(new Date(timestamp));
+        if (time < 1000000000000L) {
+            // if timestamp given in seconds, convert to millis
+            time *= 1000;
+        }
 
-        return  dateString;
+        long now = System.currentTimeMillis();
+        if (time > now || time <= 0) {
+            String dateString = formatter.format(new Date(time));
+
+            return dateString;
+        }
+
+        // TODO: localize
+        final long diff = now - time;
+         if (diff < 24 * HOUR_MILLIS) {
+             String dateString = formatter.format(new Date(time));
+            return "Hace " + diff / HOUR_MILLIS + " horas";
+        } else if (diff < 48 * HOUR_MILLIS) {
+            return "Ayer";
+        } else {
+            return "Hace " + diff / DAY_MILLIS + " dias";
+        }
+
+
     }
 
 }

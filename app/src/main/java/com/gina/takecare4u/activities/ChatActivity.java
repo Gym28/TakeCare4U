@@ -64,6 +64,7 @@ public class ChatActivity extends AppCompatActivity {
     MessageProvider mMessageProvider;
     AuthProvider mAuthProvider;
     UsersProvider mUserProvider;
+    LinearLayoutManager mLinearLayoutManager;
 
 
 
@@ -77,8 +78,9 @@ public class ChatActivity extends AppCompatActivity {
         mImageViewSendMessage = findViewById(R.id.imageViewSendMessage);
 
         mRecyclerViewMessage= findViewById(R.id.recyclerViewMessage);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
-        mRecyclerViewMessage.setLayoutManager(linearLayoutManager);
+        mLinearLayoutManager = new LinearLayoutManager(ChatActivity.this);
+        mLinearLayoutManager.setStackFromEnd(true);
+        mRecyclerViewMessage.setLayoutManager(mLinearLayoutManager);
 
         mImageViewSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +123,8 @@ public class ChatActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             mEditTextMessage.setText("");
-                            Toast.makeText(ChatActivity.this, "El mensaje ha sido enviado", Toast.LENGTH_SHORT).show();
+                            mMessageAdapter.notifyDataSetChanged();
+
                         }
                         else{
                             Toast.makeText(ChatActivity.this, "El mensaje no se pudo enviar", Toast.LENGTH_SHORT).show();
@@ -158,6 +161,19 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        if (mMessageAdapter != null){
+            mMessageAdapter.startListening();
+        }
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mMessageAdapter.stopListening();
+    }
+
+    private void getMessageChat (){
         //consulta a base de datos
         Query query = mMessageProvider.getMessageByChat(mExtraIdChat);
         FirestoreRecyclerOptions<Messages> options = new FirestoreRecyclerOptions.Builder<Messages>()
@@ -166,12 +182,19 @@ public class ChatActivity extends AppCompatActivity {
         mMessageAdapter = new MessageAdapter(options, ChatActivity.this);
         mRecyclerViewMessage.setAdapter(mMessageAdapter);
         mMessageAdapter.startListening();
-    }
+        mMessageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int numberMessage = mMessageAdapter.getItemCount();
+                int lastMessagePosition = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        mMessageAdapter.stopListening();
+                if(lastMessagePosition == -1 || (positionStart >= (numberMessage -1 ) && lastMessagePosition ==(positionStart -1))){
+                    mRecyclerViewMessage.scrollToPosition(positionStart);
+
+                }
+            }
+        });
     }
 
     private void getUserInfo() {
@@ -220,6 +243,8 @@ public class ChatActivity extends AppCompatActivity {
         ids.add(mExtraId2);
         chat.setIds(ids);
         mChatProvider.create(chat);
+        mExtraIdChat= chat.getId();
+        getMessageChat();
 
     }
 
@@ -228,11 +253,12 @@ public class ChatActivity extends AppCompatActivity {
             int size = queryDocumentSnapshots.size();
             System.out.println(size);
             if (size ==0) {
-                Toast.makeText(ChatActivity.this, "Chat no existe", Toast.LENGTH_LONG).show();
                 createChat();
             }
             else {
-                Toast.makeText(ChatActivity.this, "Chatea ahora", Toast.LENGTH_LONG).show();
+                mExtraIdChat= queryDocumentSnapshots.getDocuments().get(0).getId();
+                getMessageChat();
+
             }
 
 
