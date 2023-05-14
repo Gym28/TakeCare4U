@@ -91,7 +91,7 @@ public class NotificationHelper extends ContextWrapper {
                         m.getMessage(),
                         m.getTimeestamp(),
                         person2);
-            messagingStyle.addMessage(message1);
+            messagingStyle.addMessage(message2);
 
         }
         return new NotificationCompat.Builder(getApplicationContext(),CHANNEL_ID)

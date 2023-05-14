@@ -48,6 +48,8 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -173,46 +175,11 @@ public class ChatActivity extends AppCompatActivity {
             if(documentSnapshot.exists()){
                 if(documentSnapshot.contains("token")){
                     String token = documentSnapshot.getString("token");
-                    ArrayList <Messages> messageArrayList = new ArrayList<>();
-                    messageArrayList.add(message);
-                    Gson gson = new Gson();
-                    String messages= gson.toJson(messageArrayList);
-                    Map<String, String> data = new HashMap<>();
-                    data.put("title", "NUEVO MENSAJE");
-                    data.put("body", message.getMessage());
-                    data.put("idNotification",String.valueOf(midNotificationChat));
-                    data.put("MESSAGES",messages);
-                    FCMBody body = new FCMBody(token, "high", "4500s", data);
-                    mNotificationProviderchat.sendNotification(body).enqueue(new Callback<FCMResponse>() {
-                        @Override
-                        public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
-                            if(response.body()!=null){
-                                if(response.body().getSuccess()==1){
-                                    Toast.makeText(ChatActivity.this, "La notificación ha sido enviada", Toast.LENGTH_SHORT).show();
-
-
-                                }
-                                else {
-                                    Toast.makeText(ChatActivity.this, "La notificación no fue enviada", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            else {
-                                Toast.makeText(ChatActivity.this, "La notificación no enviada", Toast.LENGTH_SHORT).show();
-
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<FCMResponse> call, Throwable t) {
-
-                        }
-                    });
+                    getLastThreeMessages(message, token);
                 }
             }
             else {
                 Toast.makeText(ChatActivity.this, "Sin token asignado", Toast.LENGTH_SHORT).show();
-
-
 
             }
 
@@ -220,6 +187,61 @@ public class ChatActivity extends AppCompatActivity {
 
 
     }
+
+    private void getLastThreeMessages(Messages message, String token) {
+        mMessageProvider.getLastThreeMessageByChatAndSender(mExtraIdChat, mAuthProvider.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                ArrayList <Messages> messageArrayList = new ArrayList<>();
+                for(DocumentSnapshot d: queryDocumentSnapshots.getDocuments()){
+                    if(d.exists()) {
+                        //transformamos el query en objeto Message
+                         Messages message = d.toObject(Messages.class);
+                         messageArrayList.add(message);
+                    }
+                }
+                if(messageArrayList.size()==0){
+                    messageArrayList.add(message);
+                }
+                Collections.reverse(messageArrayList);
+                messageArrayList.add(message);
+                Gson gson = new Gson();
+                String messages= gson.toJson(messageArrayList);
+                Map<String, String> data = new HashMap<>();
+                data.put("title", "NUEVO MENSAJE");
+                data.put("body", message.getMessage());
+                data.put("idNotification",String.valueOf(midNotificationChat));
+                data.put("MESSAGES",messages);
+                FCMBody body = new FCMBody(token, "high", "4500s", data);
+                mNotificationProviderchat.sendNotification(body).enqueue(new Callback<FCMResponse>() {
+                    @Override
+                    public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
+                        if(response.body()!=null){
+                            if(response.body().getSuccess()==1){
+                                Toast.makeText(ChatActivity.this, "La notificación ha sido enviada", Toast.LENGTH_SHORT).show();
+
+
+                            }
+                            else {
+                                Toast.makeText(ChatActivity.this, "La notificación no fue enviada", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(ChatActivity.this, "La notificación no enviada", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FCMResponse> call, Throwable t) {
+
+                    }
+                });
+
+            }
+        });
+            }
+
 
     private void showCustomToolbar(int resourse) {
         Toolbar toolbar = findViewById(R.id.toolbar);
