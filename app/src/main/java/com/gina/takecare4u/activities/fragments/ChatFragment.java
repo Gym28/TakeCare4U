@@ -21,6 +21,8 @@ import com.gina.takecare4u.modelos.Chats;
 import com.gina.takecare4u.modelos.Publicaciones;
 import com.gina.takecare4u.providers.AuthProvider;
 import com.gina.takecare4u.providers.ChatProvider;
+import com.gina.takecare4u.providers.UsersProvider;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
 /**
@@ -45,6 +47,8 @@ public class ChatFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    UsersProvider mUserProvider;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -95,6 +99,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
             //consulta a base de datos
             Query query = mChatProvider.getAll(mAuthProvider.getUid());
             Log.e(TAG,"query:"+query);
@@ -103,7 +108,23 @@ public class ChatFragment extends Fragment {
                     .build();
             mchatAdapter = new ChatAdapter(options, getContext());
             mRecyclerView.setAdapter(mchatAdapter);
-            mchatAdapter.startListening();
+             mchatAdapter.startListening();
+
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        mchatAdapter.stopListening();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mchatAdapter.getListenerChatAdapter()!=null){
+            mchatAdapter.getListenerChatAdapter().remove();
+
+        }
+
+    }
 }

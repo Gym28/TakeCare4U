@@ -10,6 +10,9 @@ public class Users {
     private String imageCover;
     private String phone;
     private long timestamp;
+    private long lastConnection;
+
+    private boolean online;
 
 
     // constructor clase user con getter y setter
@@ -18,16 +21,18 @@ public class Users {
 
     }
 
-    public Users(String id, String nombre, String zipCode, String email, String phone, long timestamp, String imageProfile, String imageCover) {
+    public Users(String id, String email, String zipCode, String nombre, String password, String imageProfile, String imageCover, String phone, long timestamp, long lastConnection, boolean online) {
         this.id = id;
         this.email = email;
         this.zipCode = zipCode;
         this.nombre = nombre;
+        this.password = password;
+        this.imageProfile = imageProfile;
+        this.imageCover = imageCover;
         this.phone = phone;
-        this.timestamp=timestamp;
-        this.imageProfile=imageProfile;
-        this.imageCover=imageCover;
-
+        this.timestamp = timestamp;
+        this.lastConnection = lastConnection;
+        this.online = online;
     }
 
     public String getId() {
@@ -92,5 +97,21 @@ public class Users {
 
     public void setImageCover(String imageCover) {
         this.imageCover = imageCover;
+    }
+
+    public long getLastConnection() {
+        return lastConnection;
+    }
+
+    public void setLastConnection(long lastConnection) {
+        this.lastConnection = lastConnection;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 }

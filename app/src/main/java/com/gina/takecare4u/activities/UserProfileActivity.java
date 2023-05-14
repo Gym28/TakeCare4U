@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.gina.takecare4u.R;
+import com.gina.takecare4u.activities.Utils.ViewedMessageHelper;
 import com.gina.takecare4u.adapter.ThePostAdapter;
 import com.gina.takecare4u.modelos.Publicaciones;
 import com.gina.takecare4u.providers.AuthProvider;
@@ -26,6 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
@@ -47,6 +49,7 @@ public class UserProfileActivity extends AppCompatActivity {
     RecyclerView mRecicleViewThePost;
     Toolbar mtoolbar;
     FloatingActionButton mFabChat;
+    ListenerRegistration mListenerRegistration;
 
     private static final String TAG = "UserProfileActivity";
 
@@ -121,6 +124,7 @@ public class UserProfileActivity extends AppCompatActivity {
         mThePostAdapter = new ThePostAdapter(options, UserProfileActivity.this);
         mRecicleViewThePost.setAdapter(mThePostAdapter);
         mThePostAdapter.startListening();
+        ViewedMessageHelper.updateOnline(true, UserProfileActivity.this);
     }
 
     @Override
@@ -129,14 +133,28 @@ public class UserProfileActivity extends AppCompatActivity {
         mThePostAdapter.stopListening();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ViewedMessageHelper.updateOnline(false, UserProfileActivity.this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mListenerRegistration!=null){
+            mListenerRegistration.remove();
+        }
+    }
+
     private void existPost() {
-        mPublicacionesProvider.getPostByUser(mExtraIdUser).addSnapshotListener(new EventListener<QuerySnapshot>() {
+       mListenerRegistration= mPublicacionesProvider.getPostByUser(mExtraIdUser).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot value, FirebaseFirestoreException error) {
 
                     if (error != null) {
                         Log.d(TAG, "Error:" + error.getMessage());
-                    } else {
+                    } else if (value != null){
                         int numberPost = value.size();
                         if (numberPost > 0) {
                             mtexViewSinPost.setText("PUBLICACIONES");

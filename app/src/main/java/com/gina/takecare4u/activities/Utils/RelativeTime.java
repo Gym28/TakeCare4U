@@ -22,7 +22,7 @@ public class RelativeTime extends Application {
 
         long now = System.currentTimeMillis();
         if (time > now || time <= 0) {
-            return null;
+            return "Hace un momento";
         }
 
         // TODO: localize
@@ -47,7 +47,7 @@ public class RelativeTime extends Application {
     public static String timeFormatAMPM(long time, Context ctx) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a");
-       // String dateString = formatter.format(new Date(timestamp));
+        //String dateString = formatter.format(new Date(time));
         if (time < 1000000000000L) {
             // if timestamp given in seconds, convert to millis
             time *= 1000;
@@ -64,11 +64,11 @@ public class RelativeTime extends Application {
         final long diff = now - time;
          if (diff < 24 * HOUR_MILLIS) {
              String dateString = formatter.format(new Date(time));
-            return "Hace " + diff / HOUR_MILLIS + " horas";
+            return diff / HOUR_MILLIS + " horas";
         } else if (diff < 48 * HOUR_MILLIS) {
             return "Ayer";
         } else {
-            return "Hace " + diff / DAY_MILLIS + " dias";
+            return  diff / DAY_MILLIS + " dias";
         }
 
 

@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
@@ -46,6 +47,7 @@ public class PubliAdapter extends FirestoreRecyclerAdapter<Publicaciones, PubliA
     AuthProvider mAuthProvider;
 
     TextView mtextViewNumberFilter;
+    ListenerRegistration mListenerRegistration;
     private static final String TAG = "PubliAdapter";
 
     public PubliAdapter(FirestoreRecyclerOptions<Publicaciones> options, Context context){
@@ -131,10 +133,10 @@ public class PubliAdapter extends FirestoreRecyclerAdapter<Publicaciones, PubliA
     }
 
     private void getNumberLikesByPost(String idPost, final ViewHolder holder) {
-        mLikeProvider.getLikeByPost(idPost).addSnapshotListener((queryDocumentSnapshots, e) -> {
+        mListenerRegistration= mLikeProvider.getLikeByPost(idPost).addSnapshotListener((queryDocumentSnapshots, e) -> {
                    if (e != null) {
                         Log.d(TAG, "Error:" + e.getMessage());
-                    } else {
+                    } else if (queryDocumentSnapshots!=null) {
                         int numberLikes = queryDocumentSnapshots.size();
                         holder.textViewlikesCard.setText(String.valueOf(numberLikes) + " Likes");
                     }
@@ -178,6 +180,10 @@ public class PubliAdapter extends FirestoreRecyclerAdapter<Publicaciones, PubliA
             }
         });
 
+    }
+
+    public ListenerRegistration getListenerRegistration(){
+        return mListenerRegistration;
     }
 
 

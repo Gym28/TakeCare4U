@@ -8,6 +8,7 @@ public class Chats {
 
     private String idUser1;
     private String idUser2;
+    private long idNotification;
     private boolean isWriting;
     private long timestamp;
     private ArrayList<String> ids;
@@ -15,10 +16,11 @@ public class Chats {
     public Chats() {
     }
 
-    public Chats(String idChat, String idUser1, String idUser2, boolean isWriting, long timestamp, ArrayList<String> ids) {
-        this.id = idChat;
+    public Chats(String id, String idUser1, String idUser2, long idNotification, boolean isWriting, long timestamp, ArrayList<String> ids) {
+        this.id = id;
         this.idUser1 = idUser1;
         this.idUser2 = idUser2;
+        this.idNotification = idNotification;
         this.isWriting = isWriting;
         this.timestamp = timestamp;
         this.ids = ids;
@@ -70,5 +72,13 @@ public class Chats {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public long getIdNotification() {
+        return idNotification;
+    }
+
+    public void setIdNotification(long idNotification) {
+        this.idNotification = idNotification;
     }
 }

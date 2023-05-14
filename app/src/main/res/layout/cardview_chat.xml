@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="Nombre del Servicio"
                 android:maxLines="1"
-                android:textColor="@color/black"
+                android:textColor="@color/dark_purple"
                 android:textSize="16sp"
                 />
             <TextView
@@ -41,11 +41,34 @@
                 android:layout_height="wrap_content"
                 android:text="Ultimo mensaje"
                 android:maxLines="1"
-                android:textColor="@color/black"
+                android:textColor="@color/dark_purple"
                 android:textSize="14sp"
                 android:layout_marginTop="3dp"
                 />
             </LinearLayout>
+
+             <FrameLayout
+                 android:id="@+id/frameLayoutMessageNoRead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                 <View
+                     android:layout_width="30dp"
+                     android:layout_height="30dp"
+                     android:background="@drawable/circular_view_cardviewchat_layout"/>
+
+                 <TextView
+                     android:id="@+id/texVIewCountMessage"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:text="0"
+                     android:textColor="@color/white"
+                     android:layout_gravity="center"/>
+
+             </FrameLayout>
+
+
+
         
 
     </LinearLayout>

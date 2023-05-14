@@ -4,6 +4,7 @@ import com.gina.takecare4u.modelos.Users;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -23,6 +24,9 @@ public class UsersProvider {
     public Task<DocumentSnapshot> getUsers(String id){
         return
            mColection.document(id).get();
+    }    public DocumentReference getUsersRealTime(String id){
+        return
+           mColection.document(id);
     }
 
     public Task<DocumentSnapshot> getnombre(){
@@ -46,5 +50,14 @@ public class UsersProvider {
         return mColection.document(user.getId()).update(map);
 
        }
+
+    public  Task<Void> upDateOnline( String idUser, boolean status){
+        Map<String, Object> map = new HashMap<>();
+        map.put("onLine", status);
+        map.put("lastConnect", new Date().getTime());
+
+        return mColection.document(idUser).update(map);
+
+    }
 
 }

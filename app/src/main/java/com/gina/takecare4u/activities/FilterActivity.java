@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.gina.takecare4u.R;
+import com.gina.takecare4u.activities.Utils.ViewedMessageHelper;
 import com.gina.takecare4u.adapter.PubliAdapter;
 import com.gina.takecare4u.modelos.Publicaciones;
 import com.gina.takecare4u.providers.AuthProvider;
@@ -70,13 +71,23 @@ public class FilterActivity extends AppCompatActivity {
         mPubliAdapter = new PubliAdapter(options, FilterActivity.this, mTextViewNumberPostFilter);
         mRecyclerViewFilter.setAdapter(mPubliAdapter);
         mPubliAdapter.startListening();
+        ViewedMessageHelper.updateOnline(true, FilterActivity.this);
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
         mPubliAdapter.stopListening();
+
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ViewedMessageHelper.updateOnline(false, FilterActivity.this);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

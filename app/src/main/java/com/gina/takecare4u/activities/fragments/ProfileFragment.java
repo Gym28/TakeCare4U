@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
@@ -53,6 +54,7 @@ public class ProfileFragment extends Fragment {
     UsersProvider musersProvider;
     AuthProvider mAuthProvider;
     PublicacionProvider mPublicacionesProvider;
+    ListenerRegistration mListenerRegistration;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -131,14 +133,13 @@ public class ProfileFragment extends Fragment {
     }
 
     private void existPost() {
-        mPublicacionesProvider.getPostByUser(mAuthProvider.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mListenerRegistration = mPublicacionesProvider.getPostByUser(mAuthProvider.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot value, FirebaseFirestoreException error) {
                  if (error != null) {
                         Log.d(TAG, "Error:" + error.getMessage());
-                    } else
-                        {
-                             int numberPost = value.size();
+                    } else if(value!=null)
+                        {    int numberPost = value.size();
                              if (numberPost > 0) {
                              mtexViewSinPost.setText("PUBLICACIONES");
                              mtexViewSinPost.setTextColor(getResources().getColor(R.color.pink_mio));
@@ -172,6 +173,14 @@ public class ProfileFragment extends Fragment {
     public void onStop() {
         super.onStop();
         mThePostAdapter.stopListening();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mListenerRegistration != null){
+            mListenerRegistration.remove();
+        }
     }
 
     private void goToEditProfile() {

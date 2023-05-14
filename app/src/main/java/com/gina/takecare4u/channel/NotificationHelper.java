@@ -10,8 +10,13 @@ import android.graphics.Color;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.Person;
+import androidx.core.graphics.drawable.IconCompat;
 
 import com.gina.takecare4u.R;
+import com.gina.takecare4u.modelos.Messages;
+
+import java.util.Date;
 
 public class NotificationHelper extends ContextWrapper {
 
@@ -62,6 +67,37 @@ public class NotificationHelper extends ContextWrapper {
 
     }
 
+    public NotificationCompat.Builder getNotificationMessage(Messages[]messages){
+        Person person1 = new Person.Builder()
+                .setName("Gina")
+                .setIcon(IconCompat.createWithResource(getApplicationContext(), R.drawable.chica))
+                .build();
+        Person person2 = new Person.Builder()
+                .setName("Magda")
+                .setIcon(IconCompat.createWithResource(getApplicationContext(), R.drawable.chica))
+                .build();
+
+        NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(person1);
+        NotificationCompat.MessagingStyle.Message message1 =
+                new NotificationCompat.MessagingStyle.Message(
+                        "ultimo Mensaje",
+                        new Date().getTime(),
+                        person1);
+        messagingStyle.addMessage(message1);
+
+        for (Messages m: messages){
+            NotificationCompat.MessagingStyle.Message message2 =
+                new NotificationCompat.MessagingStyle.Message(
+                        m.getMessage(),
+                        m.getTimeestamp(),
+                        person2);
+            messagingStyle.addMessage(message1);
+
+        }
+        return new NotificationCompat.Builder(getApplicationContext(),CHANNEL_ID)
+                .setSmallIcon(R.drawable.chica)
+                .setStyle(messagingStyle);
+    }
 
 
     }

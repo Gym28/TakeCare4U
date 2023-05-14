@@ -9,7 +9,6 @@
     android:paddingRight="30dp">
 <LinearLayout
     android:id="@+id/linearLayoutCardMessage"
-
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -34,12 +33,12 @@
         android:text="Fecha"
         android:textColor="@color/gray_mio"
         android:textSize="12sp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="16dp"
         android:layout_gravity="bottom"/>
 
     <ImageView
         android:id="@+id/imageViewCheckCardMessage"
-        android:layout_width="20dp"
+        android:layout_width="45dp"
         android:layout_height="20dp"
         android:layout_gravity="bottom"
         android:layout_marginLeft="6dp"

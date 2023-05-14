@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.gina.takecare4u.R;
 import com.gina.takecare4u.activities.Utils.FileUtils;
+import com.gina.takecare4u.activities.Utils.ViewedMessageHelper;
 import com.gina.takecare4u.modelos.Users;
 import com.gina.takecare4u.providers.AuthProvider;
 import com.gina.takecare4u.providers.ImageProvider;
@@ -600,7 +601,18 @@ public class EditProfileActivity extends AppCompatActivity {
         galleryIntent.setType("image/*");
         ImageLauncher2.launch(galleryIntent);
 
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ViewedMessageHelper.updateOnline(true, EditProfileActivity.this);
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ViewedMessageHelper.updateOnline(false, EditProfileActivity.this);
     }
 
 }

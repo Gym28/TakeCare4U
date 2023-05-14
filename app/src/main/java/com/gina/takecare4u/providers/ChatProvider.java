@@ -27,7 +27,7 @@ public class ChatProvider {
         ArrayList<String> ids = new ArrayList<>();
         ids.add(idUser1 + idUser2);
         ids.add(idUser2 + idUser1);
-        return mCollection.whereIn("idChat", ids);
+        return mCollection.whereIn("id", ids);
     }
 
     public Query getAll(String idUser){

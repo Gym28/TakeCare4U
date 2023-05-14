@@ -27,6 +27,7 @@ import com.gina.takecare4u.adapter.PubliAdapter;
 import com.gina.takecare4u.modelos.Publicaciones;
 import com.gina.takecare4u.providers.AuthProvider;
 import com.gina.takecare4u.providers.PublicacionProvider;
+import com.gina.takecare4u.providers.UsersProvider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.Query;
 import com.mancj.materialsearchbar.MaterialSearchBar;
@@ -48,6 +49,8 @@ public class HomeFragment extends Fragment implements MaterialSearchBar.OnSearch
     PublicacionProvider mPublicacionProvider;
     PubliAdapter mPubliAdapter;
     PubliAdapter mAdapterSearch;
+
+    UsersProvider mUserProvider;
 
     private static final String TAG = "HomeFragment";
 
@@ -109,6 +112,7 @@ public class HomeFragment extends Fragment implements MaterialSearchBar.OnSearch
         setHasOptionsMenu(true);
         mAuthProvider = new AuthProvider();
         mPublicacionProvider = new PublicacionProvider();
+        mUserProvider = new UsersProvider();
 
          //implementación del searchBar, para cerrar cesión
         mSearchBar.setOnSearchActionListener(this);
@@ -130,7 +134,8 @@ public class HomeFragment extends Fragment implements MaterialSearchBar.OnSearch
             public void onClick(View v) {
                 goToSecond();
             }
-        }); return mview;
+        });
+        return mview;
       }
 
       private void getAllpost(){
@@ -163,6 +168,7 @@ public class HomeFragment extends Fragment implements MaterialSearchBar.OnSearch
     public void onStart() {
         super.onStart();
         getAllpost();
+
     }
 
     @Override
@@ -172,6 +178,15 @@ public class HomeFragment extends Fragment implements MaterialSearchBar.OnSearch
 
         if(mAdapterSearch!=null){
             mAdapterSearch.stopListening();
+
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mPubliAdapter.getListenerRegistration()!=null){
+            mPubliAdapter.getListenerRegistration().remove();
         }
     }
 
@@ -183,10 +198,13 @@ public class HomeFragment extends Fragment implements MaterialSearchBar.OnSearch
 
 
     private void singOut() {
+        mUserProvider.upDateOnline(mAuthProvider.getUid(), false);
         mAuthProvider.cerrarSesion();
         Intent intent = new Intent(getContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+
+
 
 
     }

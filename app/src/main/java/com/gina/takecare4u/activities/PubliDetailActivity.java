@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.gina.takecare4u.R;
 import com.gina.takecare4u.activities.Utils.RelativeTime;
+import com.gina.takecare4u.activities.Utils.ViewedMessageHelper;
 import com.gina.takecare4u.adapter.CommentAdapter;
 import com.gina.takecare4u.adapter.SliderAdapter;
 import com.gina.takecare4u.modelos.Comments;
@@ -41,6 +42,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -86,6 +88,8 @@ public class PubliDetailActivity extends AppCompatActivity {
     NotificationProvider mNotificationProvider;
     TokenProvider mTokenProvider;
     Toolbar mToolbar;
+
+    ListenerRegistration mListenerRegistration;
 
 
 
@@ -151,11 +155,11 @@ public class PubliDetailActivity extends AppCompatActivity {
     }
 
     private void getNumLikes() {
-        mLikeProvider.getLikeByPost(mExtrapublicacionId).addSnapshotListener((value, error) -> {
+        mListenerRegistration=mLikeProvider.getLikeByPost(mExtrapublicacionId).addSnapshotListener((value, error) -> {
             mAuthProvider.getUid();
             if (error!=null){
                 Log.d(TAG,"Error:"+error.getMessage());
-            } else {
+            } else if (value!=null) {
             int numLikes = value.size();
             if(numLikes ==1) {
                 mTextViewPubliNumLikes.setText(numLikes + " Like");
@@ -180,12 +184,28 @@ public class PubliDetailActivity extends AppCompatActivity {
         mcommentAdapter = new CommentAdapter(options, PubliDetailActivity.this);
         mRecyclerViewComment.setAdapter(mcommentAdapter);
         mcommentAdapter.startListening();
+        ViewedMessageHelper.updateOnline(true, PubliDetailActivity.this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         mcommentAdapter.stopListening();
+
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ViewedMessageHelper.updateOnline(false, PubliDetailActivity.this);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mListenerRegistration!=null){
+            mListenerRegistration.remove();
+        }
     }
 
     private void showDialogComment() {

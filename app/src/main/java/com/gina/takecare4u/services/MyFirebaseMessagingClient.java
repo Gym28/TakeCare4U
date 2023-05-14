@@ -3,10 +3,13 @@ package com.gina.takecare4u.services;
 import androidx.core.app.NotificationCompat;
 
 import com.gina.takecare4u.channel.NotificationHelper;
+import com.gina.takecare4u.modelos.Messages;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
 
 import java.util.Map;
+import java.util.Random;
 
 public class MyFirebaseMessagingClient extends FirebaseMessagingService {
 
@@ -24,16 +27,33 @@ public class MyFirebaseMessagingClient extends FirebaseMessagingService {
         String body = data.get("body");
 
         if(title!=null){
-            showNotifications(title, body);
+            if(title.equals("NUEVO MENSAJE")){
 
+             showNotificationsMessage(data);
+
+            }
+            else {
+                showNotifications(title, body);
+            }
         }
     }
 
     private void showNotifications(String title, String body){
         NotificationHelper notificationHelper = new NotificationHelper(getBaseContext());
         NotificationCompat.Builder builder = notificationHelper.getNotification(title, body);
-        notificationHelper.getManager().notify(1, builder.build());
-
+        Random random = new Random();
+        int n = random.nextInt(10000);
+        notificationHelper.getManager().notify(n, builder.build());
+    }   private void showNotificationsMessage(Map<String, String> data){
+        String title =data.get("title");
+        String body =data.get("body");
+        String messagesJSON = data.get("MESSAGES");
+        int idNotification = Integer.parseInt(data.get("idNotification"));
+        Gson gson = new Gson();
+        Messages[] messages = gson.fromJson(messagesJSON, Messages[].class);
+        NotificationHelper notificationHelper = new NotificationHelper(getBaseContext());
+        NotificationCompat.Builder builder = notificationHelper.getNotificationMessage(messages);
+        notificationHelper.getManager().notify(idNotification, builder.build());
     }
 
 }

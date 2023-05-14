@@ -11,6 +11,7 @@ public class AuthProvider {
 
     private FirebaseAuth mAuth;
 
+
     public AuthProvider (){
             mAuth= FirebaseAuth.getInstance();
     }
@@ -51,7 +52,9 @@ public class AuthProvider {
 
     public void cerrarSesion(){
         if(mAuth !=null){
+
             mAuth.signOut();
+
         }
 
     }

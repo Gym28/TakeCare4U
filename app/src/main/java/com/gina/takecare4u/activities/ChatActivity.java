@@ -1,6 +1,7 @@
 package com.gina.takecare4u.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,27 +20,43 @@ import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.gina.takecare4u.R;
+import com.gina.takecare4u.activities.Utils.RelativeTime;
+import com.gina.takecare4u.activities.Utils.ViewedMessageHelper;
 import com.gina.takecare4u.adapter.MessageAdapter;
 import com.gina.takecare4u.adapter.ThePostAdapter;
 import com.gina.takecare4u.modelos.Chats;
+import com.gina.takecare4u.modelos.FCMBody;
+import com.gina.takecare4u.modelos.FCMResponse;
 import com.gina.takecare4u.modelos.Messages;
 import com.gina.takecare4u.modelos.Publicaciones;
 import com.gina.takecare4u.providers.AuthProvider;
 import com.gina.takecare4u.providers.ChatProvider;
 import com.gina.takecare4u.providers.MessageProvider;
+import com.gina.takecare4u.providers.NotificationProvider;
+import com.gina.takecare4u.providers.TokenProvider;
 import com.gina.takecare4u.providers.UsersProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -59,12 +76,17 @@ public class ChatActivity extends AppCompatActivity {
     String mExtraId1;
     String mExtraId2;
     String mExtraIdChat;
+    long midNotificationChat;
 
     ChatProvider mChatProvider;
     MessageProvider mMessageProvider;
     AuthProvider mAuthProvider;
     UsersProvider mUserProvider;
+    TokenProvider mTokenProviderNotificationChat;
+    NotificationProvider mNotificationProviderchat;
     LinearLayoutManager mLinearLayoutManager;
+    ListenerRegistration mListenergRegistration;
+
 
 
 
@@ -91,11 +113,14 @@ public class ChatActivity extends AppCompatActivity {
 
         mExtraId1 = getIntent().getStringExtra("idUser1");
         mExtraId2 = getIntent().getStringExtra("idUser2");
-        mExtraIdChat = getIntent().getStringExtra("idChat");
+        mExtraIdChat = getIntent().getStringExtra("id");
         mChatProvider = new ChatProvider();
         mMessageProvider = new MessageProvider();
         mAuthProvider = new AuthProvider();
         mUserProvider = new UsersProvider();
+        mTokenProviderNotificationChat = new TokenProvider();
+        mNotificationProviderchat = new NotificationProvider();
+
         showCustomToolbar(R.layout.custom_chat_toolbar);
         checkIfChatExist();
     }
@@ -124,6 +149,7 @@ public class ChatActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             mEditTextMessage.setText("");
                             mMessageAdapter.notifyDataSetChanged();
+                            sendNotification(message);
 
                         }
                         else{
@@ -132,6 +158,67 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
         }
+    }
+    private void sendNotification(Messages message) {
+        //usuario del que obtenemos la información del post
+        String idUser = "";
+        if(mAuthProvider.getUid().equals(mExtraId1)){
+            idUser = mExtraId2;
+        }
+        else {
+                    idUser= mExtraId1;
+                }
+
+        mTokenProviderNotificationChat.getToken(idUser).addOnSuccessListener(documentSnapshot -> {
+            if(documentSnapshot.exists()){
+                if(documentSnapshot.contains("token")){
+                    String token = documentSnapshot.getString("token");
+                    ArrayList <Messages> messageArrayList = new ArrayList<>();
+                    messageArrayList.add(message);
+                    Gson gson = new Gson();
+                    String messages= gson.toJson(messageArrayList);
+                    Map<String, String> data = new HashMap<>();
+                    data.put("title", "NUEVO MENSAJE");
+                    data.put("body", message.getMessage());
+                    data.put("idNotification",String.valueOf(midNotificationChat));
+                    data.put("MESSAGES",messages);
+                    FCMBody body = new FCMBody(token, "high", "4500s", data);
+                    mNotificationProviderchat.sendNotification(body).enqueue(new Callback<FCMResponse>() {
+                        @Override
+                        public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
+                            if(response.body()!=null){
+                                if(response.body().getSuccess()==1){
+                                    Toast.makeText(ChatActivity.this, "La notificación ha sido enviada", Toast.LENGTH_SHORT).show();
+
+
+                                }
+                                else {
+                                    Toast.makeText(ChatActivity.this, "La notificación no fue enviada", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else {
+                                Toast.makeText(ChatActivity.this, "La notificación no enviada", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<FCMResponse> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+            else {
+                Toast.makeText(ChatActivity.this, "Sin token asignado", Toast.LENGTH_SHORT).show();
+
+
+
+            }
+
+        });
+
+
     }
 
     private void showCustomToolbar(int resourse) {
@@ -152,6 +239,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+
             }
         });
         getUserInfo();
@@ -163,6 +251,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onStart();
         if (mMessageAdapter != null){
             mMessageAdapter.startListening();
+            ViewedMessageHelper.updateOnline(true, ChatActivity.this);
         }
 
     }
@@ -170,7 +259,24 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
+
         mMessageAdapter.stopListening();
+
+    }
+    //para actualizar que si el usuario está en linea
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ViewedMessageHelper.updateOnline(false, ChatActivity.this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mListenergRegistration != null){
+            mListenergRegistration.remove();
+        }
     }
 
     private void getMessageChat (){
@@ -186,6 +292,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
+                updateViewed();
                 int numberMessage = mMessageAdapter.getItemCount();
                 int lastMessagePosition = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
 
@@ -199,33 +306,43 @@ public class ChatActivity extends AppCompatActivity {
 
     private void getUserInfo() {
         String idUserinfo;
-        if (mAuthProvider.getUid().equals(mExtraId1)){
+        if (mAuthProvider.getUid().equals(mExtraId1)) {
             idUserinfo = mExtraId2;
-        }
-        else {
+        } else {
             idUserinfo = mExtraId1;
         }
-        mUserProvider.getUsers(idUserinfo).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+       mListenergRegistration= mUserProvider.getUsersRealTime(idUserinfo).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()){
-                    if(documentSnapshot.contains("nombre")){
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                if (documentSnapshot.exists()) {
+                    if (documentSnapshot.contains("nombre")) {
                         String username = documentSnapshot.getString("nombre");
                         mTextViewUserToolbar.setText(username);
                     }
-                    if(documentSnapshot.exists()){
-                        if(documentSnapshot.contains("imageProfile")){
+                    if (documentSnapshot.contains("onLine")) {
+                        boolean onLine = documentSnapshot.getBoolean("onLine");
+                        if (onLine) {
+                            mTextViewRelativeTimeChat.setText("En Linea");
+                        } else if (documentSnapshot.contains("lastConnect")) {
+                            long lastConnect = documentSnapshot.getLong("lastConnect");
+                            String relativeTime = RelativeTime.getTimeAgo(lastConnect, ChatActivity.this);
+                            mTextViewRelativeTimeChat.setText(relativeTime);
+                        }
+                    }
+                    if (documentSnapshot.exists()) {
+                        if (documentSnapshot.contains("imageProfile")) {
                             String imageProfile = documentSnapshot.getString("imageProfile");
-                            if(imageProfile != null){
-                                if(!imageProfile.equals("")){
+                            if (imageProfile != null) {
+                                if (!imageProfile.equals("")) {
                                     Picasso.with(ChatActivity.this).load(imageProfile).into(mCircleViewToolbar);
 
                                 }
                             }
-                            }
-                            }
+                        }
+                    }
                 }
             }
+
         });
     }
 
@@ -238,6 +355,12 @@ public class ChatActivity extends AppCompatActivity {
         chat.setWriting(false);
         chat.setTimestamp(new Date().getTime());
         chat.setId(mExtraId1 + mExtraId2);
+        //para el idAleatorio
+        Random random = new Random();
+        int n = random.nextInt();
+        chat.setIdNotification(n);
+        midNotificationChat = n;
+
         ArrayList<String> ids = new ArrayList<>();
         ids.add(mExtraId1);
         ids.add(mExtraId2);
@@ -245,6 +368,7 @@ public class ChatActivity extends AppCompatActivity {
         mChatProvider.create(chat);
         mExtraIdChat= chat.getId();
         getMessageChat();
+
 
     }
 
@@ -257,7 +381,9 @@ public class ChatActivity extends AppCompatActivity {
             }
             else {
                 mExtraIdChat= queryDocumentSnapshots.getDocuments().get(0).getId();
+                midNotificationChat = queryDocumentSnapshots.getDocuments().get(0).getLong("idNotification");
                 getMessageChat();
+                updateViewed();
 
             }
 
@@ -265,6 +391,24 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    private void updateViewed() {
+        String idSender = "";
+        if(mAuthProvider.getUid().equals(mExtraId1)){
+            idSender= mExtraId2;
+        }
+        else {
+            idSender=mExtraId1;
+        }
+        mMessageProvider.getMessagesByChatAndSender(mExtraIdChat, idSender).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot document: queryDocumentSnapshots.getDocuments()){
+                    mMessageProvider.updateViewed(document.getId(), true);
+
+                }
+            }
+        });
+    }
 
 
 }

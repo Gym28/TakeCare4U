@@ -11,12 +11,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/rose_mio">
+
     <com.mancj.materialsearchbar.MaterialSearchBar
         android:id="@+id/searchBar"
         style="@style/MaterialSearchBarLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mt_hint="Busca por Precio"
         app:mt_maxSuggestionsCount="10"
         app:mt_placeholder="Buscar por precio"
         app:mt_placeholderColor="@color/blue_mio"
@@ -47,7 +47,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
         android:background="@color/pink_mio"
         android:src="@drawable/ic_add_purple"
