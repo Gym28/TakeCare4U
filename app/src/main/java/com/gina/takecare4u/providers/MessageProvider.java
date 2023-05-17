@@ -28,7 +28,7 @@ public class MessageProvider {
         return mCollection.whereEqualTo("idChat", idChat).orderBy("timeestamp", Query.Direction.ASCENDING);
     }
 
-    public Query getMessagesByChatAndSender(String idChat, String idSender){
+    public Query getMessagesByChatAndSender(String idChat, String idSender) {
         return mCollection.whereEqualTo("idChat", idChat).whereEqualTo("idSender", idSender).whereEqualTo("viewed", false);
     }
     public Query getLastThreeMessageByChatAndSender(String idChat, String idSender){
@@ -41,9 +41,17 @@ public class MessageProvider {
     public Query getLastMessages(String idChat){
         return mCollection.whereEqualTo("idChat", idChat).orderBy("timeestamp", Query.Direction.DESCENDING).limit(1);
     }
+
+    public Query getLastMessageSender(String idChat, String idSender) {
+        return mCollection.whereEqualTo("idChat", idChat).whereEqualTo("idSender", idSender)
+                .orderBy("timeestamp", Query.Direction.DESCENDING)
+                .limit(1);
+    }
     public Task <Void> updateViewed (String idDocument, boolean state){
         Map<String, Object> map= new HashMap<>();
         map.put("viewed", state);
         return mCollection.document(idDocument).update(map);
     }
+
+
 }

@@ -67,20 +67,20 @@ public class NotificationHelper extends ContextWrapper {
 
     }
 
-    public NotificationCompat.Builder getNotificationMessage(Messages[]messages){
+    public NotificationCompat.Builder getNotificationMessage(Messages[] messages, String senderUserName, String receiverUserName, String lastMessage){
         Person person1 = new Person.Builder()
-                .setName("Gina")
+                .setName(receiverUserName)
                 .setIcon(IconCompat.createWithResource(getApplicationContext(), R.drawable.chica))
                 .build();
         Person person2 = new Person.Builder()
-                .setName("Magda")
+                .setName(senderUserName)
                 .setIcon(IconCompat.createWithResource(getApplicationContext(), R.drawable.chica))
                 .build();
 
         NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(person1);
         NotificationCompat.MessagingStyle.Message message1 =
                 new NotificationCompat.MessagingStyle.Message(
-                        "ultimo Mensaje",
+                        lastMessage,
                         new Date().getTime(),
                         person1);
         messagingStyle.addMessage(message1);
@@ -95,6 +95,39 @@ public class NotificationHelper extends ContextWrapper {
 
         }
         return new NotificationCompat.Builder(getApplicationContext(),CHANNEL_ID)
+                .setSmallIcon(R.drawable.chica)
+                .setStyle(messagingStyle);
+    }
+
+    public NotificationCompat.Builder getNotificationMessage2(Messages[] messages, String usernameSender, String usernameReceiver, String lastMessage) {
+        Person person1 = new Person.Builder()
+                .setName(usernameReceiver)
+                .setIcon(IconCompat.createWithResource(getApplicationContext(), R.drawable.chica))
+                .build();
+
+        Person person2 = new Person.Builder()
+                .setName(usernameSender)
+                .setIcon(IconCompat.createWithResource(getApplicationContext(), R.drawable.chica))
+                .build();
+
+        NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(person1);
+        NotificationCompat.MessagingStyle.Message message1 = new
+                NotificationCompat.MessagingStyle.Message(
+                lastMessage,
+                new Date().getTime(),
+                person1);
+        messagingStyle.addMessage(message1);
+
+        for (Messages m: messages) {
+            NotificationCompat.MessagingStyle.Message message2 = new
+                    NotificationCompat.MessagingStyle.Message(
+                    m.getMessage(),
+                    m.getTimeestamp(),
+                    person2);
+            messagingStyle.addMessage(message2);
+        }
+
+        return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.chica)
                 .setStyle(messagingStyle);
     }

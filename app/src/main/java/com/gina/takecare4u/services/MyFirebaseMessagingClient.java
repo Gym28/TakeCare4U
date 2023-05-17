@@ -44,15 +44,20 @@ public class MyFirebaseMessagingClient extends FirebaseMessagingService {
         Random random = new Random();
         int n = random.nextInt(10000);
         notificationHelper.getManager().notify(n, builder.build());
-    }   private void showNotificationsMessage(Map<String, String> data){
-        String title =data.get("title");
-        String body =data.get("body");
+    }
+    private void showNotificationsMessage(Map<String, String> data) {
+        String title = data.get("title");
+        String body = data.get("body");
+        String usernamesender = data.get("usernamesender");
+        String usernamereceiver = data.get("usernamereceiver");
+        String lastMessage = data.get("lastMessage");
         String messagesJSON = data.get("MESSAGES");
         int idNotification = Integer.parseInt(data.get("idNotification"));
         Gson gson = new Gson();
         Messages[] messages = gson.fromJson(messagesJSON, Messages[].class);
+
         NotificationHelper notificationHelper = new NotificationHelper(getBaseContext());
-        NotificationCompat.Builder builder = notificationHelper.getNotificationMessage(messages);
+        NotificationCompat.Builder builder = notificationHelper.getNotificationMessage2(messages, usernamesender, usernamereceiver, lastMessage);
         notificationHelper.getManager().notify(idNotification, builder.build());
     }
 
